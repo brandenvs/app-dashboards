@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %}BR Code - Portal{% endblock %}</title>
+    <title>{% block title %}HyperionDev{% endblock %}</title>
 
     {% load static %}
 
@@ -128,13 +128,13 @@
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
-                            <a class="dropdown-item" href="{% url 'user_auth:show_user' %}">My profile</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' %}">My profile</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'user_auth:toggle_theme' %}">Toggle Theme</a>
+                            <a class="dropdown-item" href="{% url 'users:toggle_theme' %}">Toggle Theme</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'user_auth:logout_user' %}">Logout</a>
+                            <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>
                         </li>
                     </ul>
                 </div>

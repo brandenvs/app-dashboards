@@ -150,13 +150,13 @@
 
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
             <li>
-              <a class="dropdown-item" href="{% url 'user_auth:show_user' %}">My profile</a>
+              <a class="dropdown-item" href="{% url 'users:profile' %}">My profile</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'user_auth:toggle_theme' %}">Toggle Theme</a>
+              <a class="dropdown-item" href="{% url 'users:toggle_theme' %}">Toggle Theme</a>
             </li>
             <li>
-              <a class="dropdown-item" href="{% url 'user_auth:logout_user' %}">Logout</a>
+              <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>
             </li>
           </ul>
         </div>
@@ -179,14 +179,14 @@
           <!-- Left links -->
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a data-mdb-ripple-init class="btn btn-link  px-3 me-2" href="{% url 'user_auth:login' %}">
+              <a data-mdb-ripple-init class="btn btn-link  px-3 me-2" href="{% url 'users:login' %}">
                 Login
               </a>
             </li>
 
             <li class="nav-item">
               <a data-mdb-ripple-init class="btn btn-link btn-primary text-white px-3 me-2"
-                href="{% url 'user_auth:create_user' %}">
+                href="{% url 'users:create_user' %}">
                 Sign up
               </a>
             </li>

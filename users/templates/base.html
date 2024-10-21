@@ -144,18 +144,18 @@
                         id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
                         <i class="fas fa-user-astronaut"> {{ user.username }}</i>
                         <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                alt="Black and White Portrait of a Man" loading="lazy" /> -->
+                        alt="Black and White Portrait of a Man" loading="lazy" /> -->
                     </a>
 
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:show_user' %}">My profile</a>
+                            <a class="dropdown-item" href="{% url 'users:profile' %}">My profile</a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{% url 'users:toggle_theme' %}">Toggle Theme</a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="{% url 'users:logout_user' %}">Logout</a>
+                            <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>
                         </li>
                     </ul>
                 </div>

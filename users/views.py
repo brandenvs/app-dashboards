@@ -59,18 +59,22 @@ def sign_up(request):
             username=username, 
             email=email_address, 
             password=password
-        ).save()
+        )
+        # Set Is? - Staff
+        new_user.is_staff = False
+        # Set Is? - Superuser
+        new_user.is_superuser = False
+        # Save User to Database
+        new_user.save()
         
-                    
         # Associate user profile object
-        AstroProfile.objects.create(user=new_user)
+        AstroProfile.objects.create(user=new_user).save()
         
         # Login the user
         return render(request, 'auth/login.html', {'success_message': 'User successfully created! Please login using the same credentials.'})
 
     else:
         return render(request, 'auth/sign_up.html')
-
 
 def user_login(request):
     if request.method == 'POST':
@@ -93,4 +97,14 @@ def user_login(request):
             # Login user 
             login(request, user)
             return HttpResponseRedirect(reverse('portal:index'))
+    
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('portal:index'))
     return render(request, 'auth/login.html')
+
+def user_profile(request):
+    return render(request, 'auth/astro.html')
+
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('user_auth:login'))
