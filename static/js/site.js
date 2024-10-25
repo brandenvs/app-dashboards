@@ -6,7 +6,7 @@ checkbox.addEventListener("change", () => {
 
 const toastLiveExample = document.getElementById('errorToast');
 const toast = new bootstrap.Toast(toastLiveExample, { autohide: true });
-toast.show();
+
 
 function getTheme() {
     selectedTheme = '';
@@ -52,6 +52,12 @@ function getCSRFToken() {
 }
 
 function deletePort(fullname) {
+    const toastMessage = document.getElementById('toastNotification');
+    const standaloneToast = new bootstrap.Toast(toastMessage, { autohide: true });
+    $('#toastMsg').text('⌛ Loading ...');
+
+    standaloneToast.show();
+
     // AJAX request to trigger backend operation
     $.ajax({
         url: '/hd-v00/delete-portfolio/',
@@ -63,7 +69,10 @@ function deletePort(fullname) {
             'X-CSRFToken': getCSRFToken()  // Include CSRF token in headers
         },
         success: function (response) {
-            window.location.reload(true);
+            $('#toastMessage').text('Removed student portfolio from tracker.');
+
+            standaloneToast.show();
+
             $('#response').html('Successfully Finished Syncing!');
         },
         error: function (xhr, status, error) {

@@ -1,0 +1,162 @@
+{% extends 'standalone_base.html' %}
+
+{% block title %}🧑‍🎓 Student Progression Tracker{% endblock %}
+
+{% block content %}
+<style>
+    .resizable {
+        width: 600px;
+        height: 400px;
+        overflow: auto;
+        resize: both;
+        /* Allows both horizontal and vertical resizing */
+        border: 1px solid #ccc;
+    }
+
+    #myIframe {
+        width: 100%;
+        height: 100%;
+    }
+</style>
+<!--Body Content-->
+<div class="row g-2">
+    <div class="col-12">
+        <h4>Student Progression Tracker</h4>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="toast align-items-center m-2 {{ message.tags }} text-white" role="alert" aria-live="assertive"
+            aria-atomic="true" id="errorToast">
+            <div class="d-flex">
+                <div class="toast-body">
+                    {{ message }}
+                </div>
+                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+    <div class="col-md-9 col-12">
+        <div class="d-flex align-items-center">
+            <div class="spinner-border" role="status" id="spinner">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div id="response"></div>
+            <div class="flex-shrink-0 resizeable" id="studentIframe" style=" min-width: 100%; overflow: hidden;">
+                <iframe id="googleSheetFrame" class="frame" src="" id="myIframe" frameborder="0" height="200"></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="flex-grow-1">
+            {% if user.is_authenticated %}
+            <a class="btn btn-primary mb-3" href="#!" id="syncStudents">Sync Students</a>
+            <a class="btn btn-secondary mb-3" data-bs-toggle="offcanvas" data-bs-target="#managePorts"
+                aria-controls="managePorts">Manage Portfolios</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center m-4">
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="managePorts" aria-labelledby="managePortsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="managePortsLabel">Manage Student Portfolios</h5>
+
+            <button type="button" class="btn-close text-black" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="row">
+                <div class="col">
+                    <p class="fw-bold fs-4 text-black">Add student portfolio</p>
+                    <form action="{% url 'hyperion:add_port' %}" method="post">
+                        {% csrf_token %}
+
+                        <div class="field">
+                            <div class="control input-group mb-3">
+                                <input type="text" class="form-control"
+                                    placeholder="https://www.hyperiondev.com/portfolio/00000/"
+                                    aria-label="Recipient's username" aria-describedby="addPort" name="link" required>
+                                <input type="submit" class="btn btn-outline-secondary bg-info" value="Add" id="addPort">
+                            </div>
+                        </div>
+                        <div class="spinner-border" role="status" id="spinner2">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="col">
+                    <p class="fw-bold fs-4 text-black">Remove student portfolio</p>
+                    <ul class="list-group">
+                        {% for db_student in db_students %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ db_student.fullname }}
+
+                            <button type="button" onclick="deletePort('{{ db_student.fullname }}')"
+                                class="badge text-bg-danger rounded-pill">
+                                <i class="far fa-trash-can fa-2x"></i>
+                            </button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#spinner').hide();
+        $('#spinner2').hide();
+
+        $('#syncStudents').on('click', function () {
+            $('#spinner').show();
+            $('#studentIframe').hide();
+
+
+            $.ajax({
+                url: '{% url "hyperion:student_tracker" %}',
+                method: 'GET',
+                success: function (response) {
+                    window.location.reload(true);
+                    $('#studentIframe').show();
+                    $('#response').html('Successfully Finished Syncing!');
+
+                },
+                error: function (xhr, status, error) {
+                    $('#spinner').hide();
+                    $('#response').html('Error: ' + error);
+                }
+            });
+        });
+
+        $('#addPort').on('click', function () {
+            $('#spinner2').show();
+            $('#addPort').hide();
+        });
+    });
+</script>
+<script>
+    const iframe = document.getElementById('googleSheetFrame');
+    const baseSrc = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&single=true&widget=true&headers=false";
+
+    // Append a cache-busting parameter (timestamp)
+    iframe.src = `${baseSrc}&cachebuster=${new Date().getTime()}`;
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl)
+        })
+
+        toastList.forEach(toast => toast.show());
+    });
+
+</script>
+{% endblock %}

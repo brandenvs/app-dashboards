@@ -11,16 +11,16 @@ def get_service(request):
     response_code = main()
     
     if response_code == 200:
-        return HttpResponseRedirect(reverse('hyperion:hd_home'))
+        return HttpResponseRedirect(reverse('standalone:progression_tracker'))
 
 def index(request):
     if request.user.is_authenticated:
         db_students = dbStudent.objects.all()
 
-        return render(request, 'hd_home.html', {'db_students': db_students})
+        return render(request, 'student_progression.html', {'db_students': db_students})
 
     else:
-        return HttpResponseRedirect(reverse('user_auth:login'))
+        return HttpResponseRedirect(reverse('users:login'))
 
 def add_port(request):
     if request.method == 'POST':
@@ -37,15 +37,32 @@ def add_port(request):
     time.sleep(2)
     get_service(request)
 
-    return HttpResponseRedirect(reverse('hyperion:hd_home'))
+    return HttpResponseRedirect(reverse('standalone:progression_tracker'))
 
 def delete_port(request):
     if request.method == 'POST':
+        fullname = request.POST.get('fullname')
+        
         dbStudent.objects.filter(
-            fullname=request.POST.get('fullname')
+            fullname=fullname
         ).delete()
-
+        
+        messages.success(request, f'Successfully deleted student: {fullname}')
+        messages.error(request, f'Student "{fullname}" not found.')
+        
     time.sleep(2)
     get_service(request)
 
-    return HttpResponseRedirect(reverse('hyperion:hd_home'))
+    return HttpResponseRedirect(reverse('standalone:progression_tracker'))
+
+from django.contrib import messages
+
+
+def delete_port(request):
+    if request.method == 'POST':
+        fullname = request.POST.get('fullname')
+        dbStudent.objects.filter(fullname=fullname).delete()
+
+    time.sleep(2)
+    return HttpResponseRedirect(reverse('standalone:progression_tracker'))
+
