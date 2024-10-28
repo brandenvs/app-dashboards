@@ -164,3 +164,14 @@
 
 </script>
 {% endblock %}
+
+{% block javascript %}
+<!-- Time Counter -->
+<script type="text/javascript">
+    $(document).ajaxStart(function () {
+        $("#svgloader").removeClass("d-none");
+    }).ajaxStop(function () {
+        $("#svgloader").addClass("d-none");
+    });
+</script>
+{% endblock %}

@@ -82,12 +82,3 @@ function deletePort(fullname) {
     });
 }
 
-// Show the spinner on page load
-
-
-$(document).ajaxStart(function () {
-    $("#svgloader").removeClass("d-none");
-}).ajaxStop(function () {
-    $("#svgloader").addClass("d-none");
-});
-
