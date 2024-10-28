@@ -1,6 +1,6 @@
 # BR CODE - Site repo
 
-![Last Updated](https://img.shields.io/badge/Last%20Updated-%2024%20Sep%202024-brightgreen)
+![Last Updated](https://img.shields.io/badge/Last%20Updated-%2029%20Sep%202024-brightgreen)
 
 
 | Contributor           | Cell No.        | Email Address              |
