@@ -112,9 +112,9 @@
 </div>
 {% endblock %}
 
-{% block javascript %}
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+{% block javascript %}
 <script>
     $(document).ready(function () {
         $('#spinner').hide();
@@ -147,6 +147,7 @@
         });
     });
 </script>
+
 <script>
     const iframe = document.getElementById('googleSheetFrame');
     const baseSrc = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&single=true&widget=true&headers=false";
@@ -162,5 +163,13 @@
         toastList.forEach(toast => toast.show());
     });
 
+</script>
+
+<script type="text/javascript">
+    $(document).ajaxStart(function () {
+        $("#svgloader").removeClass("d-none");
+    }).ajaxStop(function () {
+        $("#svgloader").addClass("d-none");
+    });
 </script>
 {% endblock %}
