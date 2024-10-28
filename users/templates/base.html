@@ -1,12 +1,10 @@
 <!doctype html>
 
-<html lang="en" data-mdb-theme="light">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>{% block title %}BR Code - Portal{% endblock %}</title>
+    <title>{% block title %}{% endblock %}</title>
 
     {% load static %}
     <!-- Icon Files -->
@@ -24,18 +22,21 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500,700&display=swap" rel="stylesheet" />
 
     <!-- MDB -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css"
         integrity="sha512-ZKfM1qLFiJLgCvofeUynr29hrH/sibnrInRxJp/tW7neQzbrp1Ak53JJUxBKtAX9UreCiJ43aOveZyfQXYt92g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.dark.min.css"
         integrity="sha512-dkiuOwQVYPmwcapY2nE2Wu56kM0DipMoF9uMRjFm1ufMRCUBdi7xIL/rdUbsncoZB6zNq63J3gMw+wgzgWrPiA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.dark.rtl.min.css"
         integrity="sha512-43hCcuLwLdEHOXnzu9TQs41loiGyw4mII4qm6F+rgA1hMwkZMvZ/hhSlCEPS7S6dnCA0ZYX512gC1wC6Qei+ww=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.rtl.min.css"
         integrity="sha512-nCfdR2EW/gyEZezb8XCXH9vybKfhwE9Mu3OAhLXXEcVOs6bB0vVHsuxe/X/S4BXgk1LhatmiyGwqfdDN+BqMiA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -45,66 +46,45 @@
 
     <!-- Static Site Stylesheet -->
     <link rel="stylesheet" href="{% static 'site.css'  %}" />
-
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Montserrat", sans-serif;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            text-align: center;
-            min-height: 100vh;
-            margin: 0;
-            transition: background 0.2s linear;
-        }
-    </style>
+    <meta name="csrf-token" content="{{ csrf_token }}">
 </head>
 
 <body>
     <header>
-
         <!-- Navbar -->
         <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary p-0">
             <!-- Container wrapper -->
-            <div class="container" id="navContainer">
+            <div class="container-fluid" id="navContainer">
+                <!-- Navbar breadcrumbs -->
+                <nav aria-label="breadcrumb" class="text-secondary">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="{% block breadcrumb-1-href %}{% endblock %}">
+                                {% block breadcrumb-1-label %}{% endblock %}
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            {% block breadcrumb-2-label %}{% endblock %}
+                        </li>
+                    </ol>
+                </nav>
+
                 {% if user.is_authenticated %}
-                <!-- Navbar brand -->
-                <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code">
-                    <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
-                        style="margin-top: -1px;" />
-                </a>
                 <!-- Collapsible wrapper -->
                 <div class="collapse navbar-collapse" id="navbarButtonsExample">
                     <!-- Left links -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
-                                href="{% url 'hyperion:hd_home' %}">Hyperion
-                                Development</a>
+                            <a class="btn btn-link fs-6" data-mdb-ripple-init data-mdb-ripple-color="dark"
+                                href="{% url 'standalone:progression_tracker' %}">Student Progression Tracker
+                            </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
-                                href="#">FyreWatch</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="btn btn-link fs-6 disabled" data-mdb-ripple-init data-mdb-ripple-color="dark"
-                                href="#">SBG
-                                Trader</a>
-                        </li>
-                    </ul>
+                    </ul> -->
                 </div>
 
                 <!-- Left links -->
 
-                <!-- Notifications -->
+                <!-- Theme Toggler -->
                 <div class="d-flex align-items-center" onclick="toggleTheme()">
                     <input type="checkbox" class="checkbox" id="checkbox">
                     <label for="checkbox" class="checkbox-label">
@@ -114,113 +94,30 @@
                     </label>
                 </div>
 
-                <div class="dropdown" hidden>
-                    <a data-mdb-dropdown-init data-mdb-ripple-init
-                        class="btn btn-floating text-reset me-3 dropdown-toggle hidden-arrow" href="#"
-                        id="navbarDropdownMenuLink" role="button" aria-expanded="false" title="Notifications">
-
-                        <i class="fas fa-bell fa-2x"></i>
-
-                        <span class="badge rounded-pill badge-notification bg-danger"></span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                        <li>
-                            <a class="dropdown-item text-primary" href="#">Some news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-primary" href="#">Another news</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-primary" href="#">Something else here</a>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Avatar -->
-                <div class="d-flex align-items-center dropdown">
-                    <a data-mdb-dropdown-init data-mdb-ripple-color="dark"
-                        class="btn btn-link btn-dark me-3 dropdown-toggle hidden-arrow text-white" href="#"
-                        id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
-                        <i class="fas fa-user-astronaut"> {{ user.username }}</i>
-                        <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                        alt="Black and White Portrait of a Man" loading="lazy" /> -->
-                    </a>
-
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
-                        <li>
-                            <a class="dropdown-item" href="{% url 'users:profile' %}">My profile</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'users:toggle_theme' %}">Toggle Theme</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{% url 'users:logout' %}">Logout</a>
-                        </li>
-                    </ul>
-                </div>
-
                 <!-- Toggle button -->
                 <button data-mdb-collapse-init class="navbar-toggler" type="button"
                     data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
                 </button>
-
-                {% else %}
-                <!-- Navbar brand -->
-                <a class="navbar-brand me-2 p-0 m-2" href="/" title="BR Code">
-                    <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
-                        style="margin-top: -1px;" />
-                </a>
-
-                <!-- Collapsible wrapper -->
-                <div class="collapse navbar-collapse" id="navbarButtonsExample">
-                    <!-- Left links -->
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a data-mdb-ripple-init class="btn btn-link  px-3 me-2" href="{% url 'users:login' %}">
-                                Login
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a data-mdb-ripple-init class="btn btn-link btn-primary text-white px-3 me-2"
-                                href="{% url 'users:signup' %}">
-                                Sign up
-                            </a>
-                        </li>
-                    </ul>
-
-                    <div class="d-flex align-items-center" onclick="toggleTheme()">
-                        <input type="checkbox" class="checkbox" id="checkbox">
-                        <label for="checkbox" class="checkbox-label">
-                            <i class="fas fa-moon"></i>
-                            <i class="fas fa-sun"></i>
-                            <span class="ball"></span>
-                        </label>
-                    </div>
-
-                    <!-- Toggle button -->
-                    <button data-mdb-collapse-init class="navbar-toggler" type="button"
-                        data-mdb-target="#navbarButtonsExample" aria-controls="navbarButtonsExample"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                </div>
                 {% endif %}
             </div>
         </nav>
 
         <main role="main" class="container">
-            {% block content %}{% endblock %}
+            <div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status" id="svgloader">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div id="content-block" class="d-none">
+                {% block content %}{% endblock %}
+            </div>
         </main>
     </header>
 
     <footer class="hide-on-mobile position-absolute bottom-0 start-0 container-fluid">
         <div class="d-flex align-items-center">
             <div class="p-2 flex-grow-1 text-end">
-                <!-- Info -->
-                <a class="btn text-white" data-mdb-ripple-init style="background-color: #0082ca;" href="#!"
+                <a class="btn text-white disabled" data-mdb-ripple-init style="background-color: #0082ca;" href="#!"
                     role="button" target="_blank" title="Learn more about this site.">
                     <i class="fas fa-info fa-2x"></i>
                 </a>
@@ -233,6 +130,18 @@
             </div>
         </div>
     </footer>
+
+    <!-- Toast -->
+    <div class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true"
+        id="toastNotification" hidden>
+        <div class="d-flex">
+            <div class="toast-body" id="toastMsg">
+
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
+        </div>
+    </div>
 
     <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -251,6 +160,19 @@
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            theme = getTheme();
+        });
+    </script>
+
+    <script>
+        window.onload = function () {
+            $("#svgloader").addClass("d-none");
+            $("#content-block").removeClass("d-none");
+        };
+    </script>
 
     <script>
         const statusSecure = document.getElementById('statusSecure');
@@ -273,15 +195,7 @@
         }
     </script>
 
-    <script>
-        window.onload = function () {
-            theme = getTheme();
-        };
-    </script>
-
     {% block javascript %}{% endblock %}
 </body>
 
-</head>
-
-<body </html>
+</html>

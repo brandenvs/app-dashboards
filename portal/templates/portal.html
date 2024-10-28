@@ -4,94 +4,99 @@
 
 
 {% block content %}
-<div class="card-group">
-    <div class="card mb-1" id="appHeading">
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0">
-                    <i class="fas fa-gem fa-4x text-info"></i>
-                    <!-- <i class="fab fa-medapps fa-4x text-info"></i> -->
+<div class="frame">
+
+    <!-- Card Heading-->
+
+    <div class="card-group">
+        <div class="card mb-1" id="appHeading">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-gem fa-4x text-info"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h3 class="fw-bold text-info m-0 p-0"> Applications</h4>
+                    </div>
+                    <div class="p-2">
+                        <a class="btn btn-link btn-success text-white" title="Add a new application."
+                            href="{% url 'portal:create_app'  %}">
+                            <i class="fas fa-circle-plus fa-2x"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="flex-grow-1 ms-3">
-                    <h3 class="fw-bold text-info m-0 p-0"> Applications</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card Grouping -->
+
+    <div class="card-group">
+        <!-- Card 1 [Progression Tracker] -->
+        <div class="card mb-3" id="app">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0  mb-2">
+                        <i class="fas fa-graduation-cap fa-4x"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="card-title">
+                            <a class="custom-btn btn-11 text-white" href="{% url 'standalone:progression_tracker'  %}"
+                                title="Start integrated application">
+                                <i class="fas fa-play"></i> <small>App Ready</small>
+                                <div class="dot"></div>
+                            </a>
+                        </h5>
+                    </div>
                 </div>
-                <div class="p-2">
-                    <a class="btn btn-link btn-success text-white" title="Add a new application."
-                        href="{% url 'portal:create_app'  %}">
-                        <i class="fas fa-circle-plus fa-2x"></i>
-                    </a>
+                <p class="card-text fw-lighter m-2">Student Progression Tracker</p>
+            </div>
+        </div>
+
+        <!-- Card 2 [TBD] -->
+        <div class="card mb-3" id="app">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0  mb-2">
+                        <i class="fas fa-ban fa-4x"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="card-title text-primary fw-semibold">
+                            <a href="#" class="btn btn-link btn-lg disabled" title="Start integrated application">Start
+                                App
+                                <span class="badge rounded-pill badge-secondary"> <i class="fas fa-play"></i>
+                                    unavailable</span>
+                            </a>
+                        </h5>
+                    </div>
                 </div>
+                <p class="card-text fw-lighter m-2">This application is currently unavailable.</p>
+            </div>
+        </div>
+
+        <!-- Card 3 [TBD] -->
+        <div class="card mb-3" id="app">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="flex-shrink-0  mb-2">
+                        <i class="fas fa-ban fa-4x"></i>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h5 class="card-title text-primary fw-semibold">
+                            <a href="#" class="btn btn-link btn-lg disabled" title="Start integrated application">Start
+                                App
+                                <span class="badge rounded-pill badge-secondary"> <i class="fas fa-play"></i>
+                                    unavailable</span>
+                            </a>
+                        </h5>
+                    </div>
+                </div>
+                <p class="card-text fw-lighter m-2">This application is currently unavailable.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Card Grouping -->
-
-<div class="card-group">
-    <!-- Card 1 [TBD] -->
-    <div class="card mb-3" id="app">
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0  mb-2">
-                    <i class="fas fa-ban fa-4x"></i>
-                </div>
-                <div class="flex-grow-1 ms-3">
-                    <h5 class="card-title text-primary fw-semibold">
-                        <a href="#" class="btn btn-link btn-lg disabled" title="Start integrated application">Start
-                            App
-                            <span class="badge rounded-pill badge-secondary"> <i class="fas fa-play"></i>
-                                unavailable</span>
-                        </a>
-                    </h5>
-                </div>
-            </div>
-            <p class="card-text fw-lighter m-2">This application is currently unavailable.</p>
-        </div>
-    </div>
-
-    <!-- Card 2 [TBD] -->
-    <div class="card mb-3" id="app">
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0  mb-2">
-                    <i class="fas fa-ban fa-4x"></i>
-                </div>
-                <div class="flex-grow-1 ms-3">
-                    <h5 class="card-title text-primary fw-semibold">
-                        <a href="#" class="btn btn-link btn-lg disabled" title="Start integrated application">Start
-                            App
-                            <span class="badge rounded-pill badge-secondary"> <i class="fas fa-play"></i>
-                                unavailable</span>
-                        </a>
-                    </h5>
-                </div>
-            </div>
-            <p class="card-text fw-lighter m-2">This application is currently unavailable.</p>
-        </div>
-    </div>
-
-    <!-- Card 3 [TBD] -->
-    <div class="card mb-3" id="app">
-        <div class="card-body">
-            <div class="d-flex align-items-center">
-                <div class="flex-shrink-0  mb-2">
-                    <i class="fas fa-ban fa-4x"></i>
-                </div>
-                <div class="flex-grow-1 ms-3">
-                    <h5 class="card-title text-primary fw-semibold">
-                        <a href="#" class="btn btn-link btn-lg disabled" title="Start integrated application">Start
-                            App
-                            <span class="badge rounded-pill badge-secondary"> <i class="fas fa-play"></i>
-                                unavailable</span>
-                        </a>
-                    </h5>
-                </div>
-            </div>
-            <p class="card-text fw-lighter m-2">This application is currently unavailable.</p>
-        </div>
-    </div>
-</div>
 {% endblock %}
 
 {% block javascript %}

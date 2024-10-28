@@ -2,6 +2,11 @@
 
 {% block title %}👤 Astro Profile{% endblock %}
 
+{% block breadcrumb-1-label %}Home{% endblock %}
+{% block breadcrumb-1-href %}/{% endblock %}
+
+{% block breadcrumb-2-label %}{{ request.user.username }}'s Profile{% endblock %}
+
 <!--Body Content-->
 {% block content %}
 <style>
@@ -85,19 +90,44 @@
         <div class="card-body tab-content" id="v-pills-tabContent">
             <div class="tab-pane fade show active" id="v-pills-profile" role="tabpanel"
                 aria-labelledby="v-pills-profile" tabindex="0">
-                <div class="row">
-                    <div class="col">
-                        <button id="password-reset" type="button" class="btn btn-warning" data-mdb-ripple-init>Update
-                            Your Username</button>
-                    </div>
-                    <div class="col">
-                        <button id="password-reset" type="button" class="btn btn-warning" data-mdb-ripple-init>Change
-                            Contact Email
-                            Password</button>
-                    </div>
-                    <div class="col">
-                        <button id="password-reset" type="button" class="btn btn-warning" data-mdb-ripple-init>Reset
-                            Password</button>
+                <div class="row g-4">
+                    <!-- Second Column -->
+                    <div class="col-md-6 col-12">
+                        <div class="row g-4">
+                            <!-- Email Address Section -->
+                            <div class="col-md-6 col-12">
+                                <div class="me-3">
+                                    <p class="mb-0 text-end">Email Address</p>
+                                    <label for="emailAddress" class="visually-hidden">Email Address</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="emailAddress"
+                                        value="{{ request.user.email }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Buttons -->
+                                <div class="d-flex align-items-center">
+                                    <button type="button" class="btn btn-dark" data-mdb-ripple-init>Edit</button>
+                                </div>
+                            </div>
+
+                            <!-- Password Name Section -->
+                            <div class="col-md-6 col-12">
+                                <div class="me-3">
+                                    <p class="mb-0 text-end">Password <span
+                                            class="text-body-secondary ">(tokenised)</span>
+                                    </p>
+                                    <label for="passwordField" class="visually-hidden">Password</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="passwordField"
+                                        value="{{ request.user.password }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <!-- Buttons -->
+                                <div class="d-flex align-items-center">
+                                    <a type="button" class="btn btn-dark" data-mdb-ripple-init>Change</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,42 +146,3 @@
 </div>
 
 {% endblock %}
-<div class="row g-4">
-    <!-- Second Column -->
-    <div class="col-md-6 col-12">
-        <div class="row g-4">
-            <!-- Email Address Section -->
-            <div class="col-md-6 col-12">
-                <div class="me-3">
-                    <p class="mb-0 text-end">Email Address</p>
-                    <label for="emailAddress" class="visually-hidden">Email Address</label>
-                    <input type="text" readonly class="form-control-plaintext" id="emailAddress"
-                        value="{{ request.user.email }}">
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <!-- Buttons -->
-                <div class="d-flex align-items-center">
-                    <button type="button" class="btn btn-dark" data-mdb-ripple-init>Edit</button>
-                </div>
-            </div>
-
-            <!-- Password Name Section -->
-            <div class="col-md-6 col-12">
-                <div class="me-3">
-                    <p class="mb-0 text-end">Password <span class="text-body-secondary ">(tokenised)</span>
-                    </p>
-                    <label for="passwordField" class="visually-hidden">Password</label>
-                    <input type="text" readonly class="form-control-plaintext" id="passwordField"
-                        value="{{ request.user.password }}">
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <!-- Buttons -->
-                <div class="d-flex align-items-center">
-                    <a type="button" class="btn btn-dark" data-mdb-ripple-init>Change</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

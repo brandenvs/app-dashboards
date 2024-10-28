@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 from users.models import AstroProfile
 
+
 def get_theme(request):
     try:
         selected_theme = request.session['selected_theme']
@@ -19,6 +20,7 @@ def get_theme(request):
     else:
         request.session.setdefault('selected_theme', 'light')
         return HttpResponse(request.session['selected_theme'])
+
 
 def toggle_theme(request):
     selected_theme = str(request.session['selected_theme'])
@@ -35,6 +37,7 @@ def toggle_theme(request):
     else:
         selected_theme = get_theme(request)
         return HttpResponse(request.session['selected_theme'])
+
 
 def sign_up(request):
     if request.method == 'POST':
@@ -76,6 +79,7 @@ def sign_up(request):
     else:
         return render(request, 'auth/sign_up.html')
 
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -102,9 +106,11 @@ def user_login(request):
         return HttpResponseRedirect(reverse('portal:index'))
     return render(request, 'auth/login.html')
 
+
 def user_profile(request):
     return render(request, 'auth/astro.html')
 
+
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect(reverse('user_auth:login'))
+    return HttpResponseRedirect(reverse('users:login'))

@@ -50,14 +50,14 @@
   <link rel="stylesheet" href="{% static 'site.css'  %}" />
 
   <style>
-    @import url("https://fonts.googleapis.com/css2?family=Montserrat&display=swap");
+    @import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
 
     * {
       box-sizing: border-box;
     }
 
     body {
-      font-family: "Montserrat", sans-serif;
+      font-family: "Lato", sans-serif;
       background-color: #fff;
       display: flex;
       justify-content: center;
@@ -84,6 +84,7 @@
           <img src="{% static 'br-code-dark.gif' %}" height="80" width="80" loading="lazy" class="rounded-5"
             style="margin-top: -1px;" />
         </a>
+
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarButtonsExample">
           <!-- Left links -->
@@ -144,8 +145,6 @@
             class="btn btn-link btn-dark me-3 dropdown-toggle hidden-arrow text-white" href="#"
             id="navbarDropdownMenuAvatar" role="button" aria-expanded="false" title="Astro Profile">
             <i class="fas fa-user-astronaut"> {{ user.username }}</i>
-            <!-- <img src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp" class="rounded-circle" height="25"
-                alt="Black and White Portrait of a Man" loading="lazy" /> -->
           </a>
 
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
@@ -212,6 +211,7 @@
     </nav>
 
     <main role="main" class="container">
+
       {% block content %}{% endblock %}
     </main>
   </header>
@@ -248,6 +248,7 @@
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 
   <script>
     const statusSecure = document.getElementById('statusSecure');

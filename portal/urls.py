@@ -6,5 +6,5 @@ app_name = 'portal'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('new-app/', views.create_app, name='create_app'),    
+    path('new-app/', views.create_app, name='create_app'),
 ]
