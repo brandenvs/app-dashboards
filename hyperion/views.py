@@ -13,23 +13,14 @@ def get_service(request):
     if response_code == 200:
         return HttpResponseRedirect(reverse('standalone:progression_tracker'))
 
+
 def index(request):
-    if request.user.is_authenticated:
-        db_students = dbStudent.objects.all()
+    return HttpResponseRedirect(reverse('standalone:progression_tracker'))
 
-        return render(request, 'student_progression.html', {'db_students': db_students})
-
-    else:
-        return HttpResponseRedirect(reverse('users:login'))
 
 def add_port(request):
     if request.method == 'POST':
         portfolio_url=request.POST.get('link')
-        
-    # if dbStudent.objects.get(portfolio_url=portfolio_url):
-    #     return render(request, 'hd_home.html', {'message': 'student'})
-
-        
         dbStudent.objects.create(
             portfolio_url=request.POST.get('link')
         ).save()
@@ -38,6 +29,7 @@ def add_port(request):
     get_service(request)
 
     return HttpResponseRedirect(reverse('standalone:progression_tracker'))
+
 
 def delete_port(request):
     if request.method == 'POST':
@@ -56,7 +48,6 @@ def delete_port(request):
     return HttpResponseRedirect(reverse('standalone:progression_tracker'))
 
 from django.contrib import messages
-
 
 def delete_port(request):
     if request.method == 'POST':

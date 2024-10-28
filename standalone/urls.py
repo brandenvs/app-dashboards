@@ -5,5 +5,6 @@ from . import views
 app_name = 'standalone'
 
 urlpatterns = [
-    path('progression-tracker/', views.progression_tracker, name='progression_tracker'), 
+    path('progression-tracker/', views.progression_tracker, name='progression_tracker'),
+    path('home/', views.index, name='home'),
 ]

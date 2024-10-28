@@ -7,6 +7,10 @@ from hyperion.models import dbStudent
 
 app_label = 'standalone'
 
+
+def index(request):
+    return render(request, 'partials/standalone_home.html')
+
 def progression_tracker(request):
     if request.user.is_authenticated:
         db_students = dbStudent.objects.all()

@@ -2,6 +2,11 @@
 
 {% block title %}🧑‍🎓 Student Progression Tracker{% endblock %}
 
+{% block breadcrumb-1-label %}Home{% endblock %}
+{% block breadcrumb-1-href %}/{% endblock %}
+
+{% block breadcrumb-2-label %}Progression Tracker{% endblock %}
+
 {% block content %}
 <style>
     .resizable {
@@ -21,7 +26,6 @@
 <!--Body Content-->
 <div class="row g-2">
     <div class="col-12">
-        <h4>Student Progression Tracker</h4>
         {% if messages %}
         {% for message in messages %}
         <div class="toast align-items-center m-2 {{ message.tags }} text-white" role="alert" aria-live="assertive"
