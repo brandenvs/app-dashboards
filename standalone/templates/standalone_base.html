@@ -166,13 +166,6 @@
     </script>
 
     <script>
-        window.onload = function () {
-            $("#svgloader").addClass("d-none");
-            $("#content-block").removeClass("d-none");
-        };
-    </script>
-
-    <script>
         const statusSecure = document.getElementById('statusSecure');
         const statusInsecure = document.getElementById('statusInsecure');
 
@@ -192,6 +185,13 @@
             this.textContent = 'Show Element';
         }
     </script>
+    <script>
+        window.onload = function () {
+            $("#svgloader").addClass("d-none");
+            $("#content-block").removeClass("d-none");
+        };
+    </script>
+
 
     {% block javascript %}{% endblock %}
 </body>

@@ -17,7 +17,7 @@ from googleapiclient.errors import HttpError
 
 from labSite.settings import CREDS_FILE
 
-from .models import dbStudent
+from .models import StudentProgress
 
 
 class Student:
@@ -221,7 +221,7 @@ def data_processing(driver: webdriver.Edge, level: str):
     return total_completed, total_below, total_incomplete, total_resubmissions
 
 def main():
-    port_urls = dbStudent.objects.values_list('portfolio_url', flat=True)    
+    port_urls = StudentProgress.objects.values_list('portfolio_url', flat=True)    
     
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
@@ -293,10 +293,11 @@ def main():
                 )
 
             try:
-                db_student = dbStudent.objects.get(portfolio_url=url, fullname='not-set')
+                db_student = StudentProgress.objects.get(portfolio_url=url, fullname='not-set')
                 if db_student:
                     db_student.fullname = student.fullname
                     db_student.bootcamp = student.bootcamp
+                    
                     db_student.save()  # Save the changes to the database
             except:
                 print('Student already has properties set: ', student.fullname)

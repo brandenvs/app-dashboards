@@ -1,12 +1,9 @@
-window.onload = function () {
-    const checkbox = document.getElementById("checkbox");
-    const toastLiveExample = document.getElementById('errorToast');
-    const toast = new bootstrap.Toast(toastLiveExample, { autohide: true });
-
-    checkbox.addEventListener("change", () => {
-        toggleTheme();
-    });
-};
+const checkbox = document.getElementById("checkbox");
+const toastLiveExample = document.getElementById('errorToast');
+const toast = new bootstrap.Toast(toastLiveExample, { autohide: true });
+checkbox.addEventListener("change", () => {
+    toggleTheme();
+});
 
 function getTheme() {
     selectedTheme = '';
