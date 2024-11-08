@@ -26,7 +26,10 @@ class DomainRedirectMiddleware:
             
             if current_path != '/portal/':
                 return HttpResponseRedirect(reverse('portal:index'))
-
-        # Default response
-        response = self.get_response(request)
-        return response
+            
+            elif current_path != '/old-auth/?next=/portal/':
+                return HttpResponseRedirect(reverse('portal:index'))
+        else:
+            # Default response
+            response = self.get_response(request)
+            return response
