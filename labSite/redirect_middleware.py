@@ -25,7 +25,7 @@ class DomainRedirectMiddleware:
             current_path = str(request.path)
             
             if current_path != '/portal/':
-                return HttpResponseRedirect(reverse('stadprin:temp'))
+                return HttpResponseRedirect(reverse('portal:index'))
 
         # Default response
         response = self.get_response(request)
