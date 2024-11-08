@@ -13,18 +13,18 @@ class DomainRedirectMiddleware:
         # Get the host from the request
         current_domain = request.get_host()
 
-        potential_paths = ['/fetch-theme/', '/portal/', '/?next=/portal/']
+        potential_paths = ['/fetch-theme/', '/portal/', '/old-auth/?next=/portal/', '/?next=/portal/', '/']
         print(current_domain)
         current_path = str(request.path)
         print(current_path)
 
-        if current_domain == 'stadprin.com':
+        if current_domain == 'localhost:8000':
             current_path = str(request.path)
 
             if current_path != '/welcome/':
                 return HttpResponseRedirect(reverse('stadprin:temp'))
 
-        elif current_domain == 'spt.bcodelabs.com':
+        elif current_domain == '127.0.0.1:8000':
             current_path = str(request.path)
             
             if current_path not in potential_paths: 
