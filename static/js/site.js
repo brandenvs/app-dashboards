@@ -9,7 +9,7 @@ function getTheme() {
     selectedTheme = '';
 
     $.ajax({
-        url: '/fetch-theme/',
+        url: '/users/fetch-theme/',
         type: 'GET',
         success: function (response) {
             selectedTheme = response;
@@ -28,7 +28,7 @@ function getTheme() {
 
 function toggleTheme() {
     $.ajax({
-        url: '/toggle-theme/',
+        url: '/users/toggle-theme/',
         type: 'GET',
 
         success: function (response) {
