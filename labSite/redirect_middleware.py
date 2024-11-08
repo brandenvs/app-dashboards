@@ -13,7 +13,7 @@ class DomainRedirectMiddleware:
         # Get the host from the request
         current_domain = request.get_host()
 
-        potential_paths = ['/fetch-theme/', '/portal/', '/old-auth/?next=/portal/', '/?next=/portal/', '/']
+        potential_paths = ['/portal/', '/old-auth/?next=/portal/', '/?next=/portal/', '/']
         print(current_domain)
         current_path = str(request.path)
         print(current_path)
@@ -27,7 +27,7 @@ class DomainRedirectMiddleware:
         elif current_domain == 'spt.bcodelabs.com':
             current_path = str(request.path)
             
-            if current_path not in potential_paths: 
+            if current_path not in potential_paths:
                 return HttpResponseRedirect(reverse('portal:index'))
 
         # Default response
