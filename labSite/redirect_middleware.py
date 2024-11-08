@@ -14,6 +14,7 @@ class DomainRedirectMiddleware:
         current_domain = request.get_host()
 
         potential_paths = ['/fetch-theme/', '/portal/', '/old-auth/?next=/portal/', '/?next=/portal/', '/', '/progression-tracker/', '/home/', '/signup/']
+
         print(current_domain)
         current_path = str(request.path)
         print(current_path)
@@ -21,7 +22,7 @@ class DomainRedirectMiddleware:
         if current_domain == 'stadprin.com':
             current_path = str(request.path)
 
-            if current_path != '/welcome/':
+            if current_path == '/':
                 return HttpResponseRedirect(reverse('stadprin:temp'))
 
         elif current_domain == 'spt.bcodelabs.com':
