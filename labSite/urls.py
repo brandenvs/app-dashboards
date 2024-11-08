@@ -13,5 +13,8 @@ urlpatterns = [
     path('hd-v00/', include('hyperion.urls')),
     path('standalone-apps/', include('standalone.urls')),
     
+    path('welcome/', include('stadprin.urls')),
+    
+    
     
 ]

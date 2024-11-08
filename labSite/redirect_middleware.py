@@ -11,13 +11,13 @@ class DomainRedirectMiddleware:
         current_domain = request.get_host()
 
         print(current_domain)
-        # Define actions based on the domain
+
         if current_domain == 'stadprin.com':
-            # Redirect to the appropriate view or URL for domain1
-            return redirect('/welcome')  # Or serve a specific view
+
+            return redirect('/welcome')
         elif current_domain == 'bcodelabs.com':
-            # Redirect to the appropriate view or URL for domain2
-            return redirect('/portal')  # Or serve a specific view
+        
+            return redirect('/portal')
 
         # Default response
         response = self.get_response(request)
