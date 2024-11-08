@@ -16,10 +16,16 @@ class DomainRedirectMiddleware:
         print(current_domain)
 
         if current_domain == 'stadprin.com':
-            return HttpResponseRedirect(reverse('stadprin:index'))
+            current_path = str(request.path)
 
-        elif current_domain == 'spt.bcodelabs.com':    
-            return HttpResponseRedirect(reverse('portal:index'))
+            if current_path != '/welcome/':
+                return HttpResponseRedirect(reverse('stadprin:temp'))
+
+        elif current_domain == 'spt.bcodelabs.com':
+            current_path = str(request.path)
+            
+            if current_path != '/portal/':
+                return HttpResponseRedirect(reverse('stadprin:temp'))
 
         # Default response
         response = self.get_response(request)
