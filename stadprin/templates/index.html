@@ -1,3 +1,4 @@
+{% load static %}
 <style>
     @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300);
 
@@ -80,7 +81,7 @@
         height: 383px;
         overflow: hidden;
         background-color: rgba(255, 0, 0, 0.5);
-        background: url("http://fc05.deviantart.net/fs71/f/2014/151/4/0/os_x_yosemite__by_atopsy-d7ki02c.png") center center;
+        background: url("{% static 'robo-cop.webp' %}") center center;
         background-size: 300% 100%;
         border: 3px solid #333;
         border-radius: 3px;
@@ -143,8 +144,7 @@
     </div>
 
     <div id="iPhone">
-        <div id="screen"><img id="shapeShiftLogo"
-                src="https://security.world/wp-content/uploads/2020/03/AI-Policing-Model.jpg" /></div>
+        <div id="screen"><img id="shapeShiftLogo" src="http://www.html-programming.dk/img/yosemite-blurry.png" /></div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
