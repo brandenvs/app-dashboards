@@ -18,13 +18,13 @@ class DomainRedirectMiddleware:
         current_path = str(request.path)
         print(current_path)
 
-        if current_domain == 'localhost:8000':
+        if current_domain == 'stadprin.com':
             current_path = str(request.path)
 
             if current_path != '/welcome/':
                 return HttpResponseRedirect(reverse('stadprin:temp'))
 
-        elif current_domain == '127.0.0.1:8000':
+        elif current_domain == 'spt.bcodelabs.com':
             current_path = str(request.path)
             
             if current_path not in potential_paths: 
