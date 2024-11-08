@@ -5,5 +5,5 @@ from . import views
 app_name = 'stadprin'
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.temp, name='temp'),
 ]

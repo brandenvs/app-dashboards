@@ -18,7 +18,7 @@ class DomainRedirectMiddleware:
         if current_domain == 'stadprin.com':
             return HttpResponseRedirect(reverse('stadprin:index'))
 
-        elif current_domain == 'bcodelabs.com':        
+        elif current_domain == 'spt.bcodelabs.com':    
             return HttpResponseRedirect(reverse('portal:index'))
 
         # Default response
