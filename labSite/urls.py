@@ -5,7 +5,7 @@ urlpatterns = [
     # Site hubs and security
     path('admin/', admin.site.urls),
     path('old-auth/', include('user_auth.urls')),
-    path('', include('users.urls')), # New
+    path('users/', include('users.urls')), # New
 
     path('portal/', include('portal.urls')),
 
