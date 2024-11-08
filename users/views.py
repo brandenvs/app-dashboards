@@ -23,6 +23,7 @@ def get_theme(request):
 
 
 def toggle_theme(request):
+    get_theme(request)
     selected_theme = str(request.session['selected_theme'])
     
     if selected_theme:
