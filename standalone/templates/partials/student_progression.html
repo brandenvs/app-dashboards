@@ -28,13 +28,24 @@
     }
 </style>
 
-{% for student in students %}
 <div class="row">
     <div class="col-12">
-        {{ student.f }}
+        <div id="bar-chart"></div>
+        <p class="fw-light">Current Students Tracked</p>
     </div>
+    {% for student_name, levels in view_dict.items %}
+    <div class="col-12">
+        <p class="fw-semibold">{{ student_name }}</p>
+    </div>
+    {% for level, progression in levels.items %}
+    <div class="col-12">
+        <p class="fs-4 fw-bolder">{{ level }} - {{ progression }}</p>
+    </div>
+    {% endfor %}
+    {% endfor %}
 </div>
-<div class="progress-pie-chart" data-percent="{{ }}">
+</div>
+<div class="progress-pie-chart" data-percent="50">
     <div class="ppc-progress">
         <div class="ppc-progress-fill"></div>
     </div>
@@ -44,7 +55,6 @@
         </div>
     </div>
 </div>
-
 <!--Google Sheet-->
 <div class="row g-2">
     <div class="col-12">
@@ -135,9 +145,10 @@
 {% endblock %}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- <script type="text/javascript" src="{% static 'progression-tracker.js' %}"></script> -->
 
 {% block javascript %}
+<script type="text/javascript" src="{% static 'progression-tracker.js' %}"></script>
+
 <script>
     $(function () {
         var $ppc = $('.progress-pie-chart'),
@@ -182,7 +193,6 @@
         });
     });
 </script>
-
 <script type="text/javascript">
     const iframe = document.getElementById('googleSheetFrame');
     const baseSrc = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&single=true&widget=true&headers=false";
@@ -198,7 +208,6 @@
         toastList.forEach(toast => toast.show());
     });
 </script>
-
 <script type="text/javascript">
     $(document).ajaxStart(function () {
         $("#svgloader").removeClass("d-none");

@@ -1,3 +1,4 @@
 from django.contrib import admin
+from hyperion.models import StudentProgress
 
-# Register your models here.
+admin.site.register(StudentProgress)
