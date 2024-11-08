@@ -13,7 +13,7 @@ class DomainRedirectMiddleware:
         # Get the host from the request
         current_domain = request.get_host()
 
-        potential_paths = ['/fetch-theme/', '/portal/', '/old-auth/?next=/portal/']
+        potential_paths = ['/fetch-theme/', '/portal/', '/?next=/portal/']
         print(current_domain)
         current_path = str(request.path)
         print(current_path)
