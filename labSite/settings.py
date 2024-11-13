@@ -23,7 +23,6 @@ INSTALLED_APPS = [
     'hyperion',
     'portal',
     'stadprin',
-    'stadprin',
     'user_auth',
     'stadprin',
     'corsheaders',
@@ -36,6 +35,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'labSite.redirect_middleware.DomainRedirectMiddleware',  # add this
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',    
     'django.middleware.security.SecurityMiddleware',
