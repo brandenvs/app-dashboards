@@ -21,7 +21,7 @@ class DomainRedirectMiddleware:
         
         if current_domain == 'stadprin.com':
             if request.path == '/':
-                return HttpResponseRedirect(reverse('stadprin:temp'))
+                return HttpResponseRedirect(reverse('stadprin:home'))
         
         elif current_domain == 'spt.bcodelabs.com':
             if request.path == '/':

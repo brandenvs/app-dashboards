@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--STADPRIN-->
+
+<!-- {need to add block title}-->
+<system.webServer>
+    <security>
+        <dynamicIpSecurity denyAction="Forbidden">
+            <denyByConcurrentRequests enabled="true" maxConcurrentRequests="10" />
+            <denyByRequestRate enabled="true" maxRequests="30" requestIntervalInMilliseconds="300" />
+        </dynamicIpSecurity>
+    </security>
+</system.webServer>
+
+<head>
+    <!--(PRIMARY) Meta Data-->
+    <meta http-equiv="content-type" content="width=device-width, initial-scale=1.0" />
+    <meta name="StadPrin" content="StadPrin" />
+    <meta name="keywords"
+        content="Automated Policing,Artificial Intelligence,Technical Automation,Data Science,South African Cities, South African Police" />
+    <meta name="description"
+        content="Stadprin is building the future of policing by automating paperwork for patrol officers. Currently, patrol spends one-third of their shift doing paperwork. Turning this to zero is the same as increasing the police force by 50%, fixing the problem of understaffed departments and saving South African cities." />
+
+    <!-- Modified to remove "og" -->
+    <meta property="locale" content="en_US" />
+    <meta property="locale:alternate" content="en_ZA" />
+    <meta property="type" content="website" />
+    <meta property="title" content="StadPrin" />
+    <meta property="description"
+        content="Stadprin is building the future of policing by automating paperwork for patrol officers. Currently patrol spends one third of their shift doing paperwork. Turning this to zero is the same as increasing the police force by 50%, fixing the problem of understaffed departments and saving South African cities." />
+    <meta property="site_name" content="Stadprin" />
+    <meta property="url" content="http://stadprin.com" />
+
+    <!-- Schema.org markup -->
+    <meta itemprop="name" content="Stadprin" />
+    <!-- instructs search engines -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- landing page-->
+    <title>{% block title %}{% endblock %}</title>
+
+    {% load static %}
+
+    {% block site-css %}{% endblock %}
+
+    <!-- Links-->
+    <link rel="stylesheet" href="{% static 'styles.css'  %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrstadpriner {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        footer {
+            background-color: #000000;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+
+    <main role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2023 StadPrin (PTY) LTD. All rights reserved.</p>
+    </footer>
+
+    {% block site-js %}{% endblock %}
+
+</body>
+
+</html>

@@ -1,0 +1,637 @@
+/* styles.css */
+
+/* Import Lato font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: black;
+    color: white;
+    /* Set body text color to white */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header {
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+    padding: 0;
+    text-align: center;
+    position: relative;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+nav ul li {
+    margin: 0 1rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.header {
+    background-image: url('capetown-city-cbd.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    max-width: 100%;
+    max-block-size: 1500px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    font-family: 'Lato', sans-serif;
+    /* Ensure header text uses Lato font */
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Dark overlay */
+    z-index: 1;
+}
+
+.header h1 {
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    /* Text shadow */
+}
+
+.hero {
+    background: url('capetown-city-cbd.jpg') no-repeat center center/cover;
+    color: #fff;
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.features {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: black;
+    color: white;
+    width: 100%;
+    max-width: 100%;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.feature {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.feature h1 {
+    position: relative;
+    z-index: 2;
+    font-weight: bold;
+    font-size: 3rem;
+    color: grey;
+    /* Text shadow */
+}
+
+.hero-container {
+    background-image: url('capetown-city-cbd.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    width: 100vw;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+.hero-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Dark overlay */
+    z-index: 1;
+}
+
+.top-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 2rem;
+    z-index: 3;
+    /* Ensure it is above the overlay */
+}
+
+.work-button-link {
+    text-decoration: none;
+    /* Remove underline from link */
+}
+
+.work-button {
+    background-color: #FF5722;
+    /* Orange color */
+    color: white;
+    /* Black text color */
+    border: 2px solid #FF5722;
+    /* Orange border */
+    padding: 0.75rem 2rem;
+    /* Match padding with .cta-button */
+    border-radius: 50px;
+    /* Match border-radius with .cta-button */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+    /* Ensure it is above the overlay */
+}
+
+.work-button:hover {
+    background-color: rgba(255, 87, 34, 0.1);
+    /* Light orange fill on hover */
+    transform: translateY(-2px);
+}
+
+.hero-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    z-index: 2;
+    /* Ensure it is above the overlay */
+}
+
+.logo {
+    font-size: 8rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    letter-spacing: 2px;
+    z-index: 2;
+    /* Ensure it is above the overlay */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+    /* Add black shadows */
+}
+
+.hero-text {
+    font-size: 1.5rem;
+    font-weight: normal;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    z-index: 2;
+    /* Ensure it is above the overlay */
+}
+
+.cta-button {
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 3;
+    /* Ensure it is above the overlay */
+}
+
+.cta-button:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+    transform: translateY(-2px);
+}
+
+
+.footer {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    z-index: 2;
+    /* Ensure it is above the overlay */
+}
+
+.wcg-logo {
+    height: 50px;
+    width: 50px;
+    background-image: url('western-cape-logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.wcg-text {
+    font-size: 0.875rem;
+    line-height: 1.4;
+    opacity: 0.8;
+    text-align: left;
+    /* Align text to the left */
+    font-weight: bold;
+    /* Make text bold */
+    color: white;
+    /* Make text white */
+}
+
+@media (max-width: 768px) {
+    .logo {
+        font-size: 4rem;
+    }
+
+    .hero-text {
+        font-size: 1.25rem;
+    }
+
+    .work-button {
+        font-size: 0.875rem;
+        padding: 0.5rem 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 3rem;
+    }
+
+    .hero-text {
+        font-size: 1.1rem;
+    }
+
+    .footer {
+        left: 1rem;
+        bottom: 1rem;
+    }
+}
+
+.feature-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.stats {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.image-and-text {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+}
+
+.feature-image-right {
+    background-image: url('capetown-city-cbd.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 50%;
+    height: auto;
+    padding: 5px;
+}
+
+.text-content {
+    width: 50%;
+    padding: 5px;
+}
+
+.text-content h2 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.text-content p {
+    margin-bottom: 1rem;
+}
+
+footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 2rem 0;
+    width: 100%;
+    font-family: lato, sans-serif;
+}
+
+/* CSS for Full-Screen Image Background */
+.full-screen-image {
+    background-color: transparent;
+    /* Replace with the path to your image */
+    background-size: 1000px 1000px;
+    /* Set specific size */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 1000px;
+    /* Set specific height */
+    width: 1000px;
+    /* Set specific width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.full-screen-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Dark overlay */
+    z-index: 1;
+}
+
+.full-screen-image .overlay-text {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.full-screen-image .overlay-text h1 {
+    font-size: 10rem;
+    font-weight: bold;
+    margin: 0;
+    text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.7);
+    /* Text shadow */
+}
+
+.full-screen-image .overlay-text p {
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+.full-screen-image .overlay-text .button {
+    background-color: transparent;
+    /* No fill */
+    color: orange;
+    /* Orange text */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 15px;
+    /* More rounded corners */
+    font-weight: bold;
+    border: 3px solid orange;
+    /* Orange stroke */
+    position: relative;
+    top: 5cm;
+    /* Move the button 5 cm lower */
+}
+
+.full-screen-image .overlay-text .button:hover {
+    background-color: rgba(255, 165, 0, 0.1);
+    /* Light orange fill on hover */
+}
+
+.full-screen-image .work-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: transparent;
+    /* No fill */
+    color: orange;
+    /* Orange text */
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 25px;
+    /* More rounded corners */
+    font-weight: bold;
+    border: 3px solid orange;
+    /* Orange stroke */
+    z-index: 2;
+}
+
+.full-screen-image .work-button:hover {
+    background-color: rgba(255, 165, 0, 0.1);
+    /* Light orange fill on hover */
+}
+
+.stats-container {
+    background-color: black;
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    color: #999;
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 4rem;
+    line-height: 1.2;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 6rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    flex: 1;
+    max-width: 300px;
+}
+
+.stat-number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.stat-description {
+    color: #999;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}
+
+/* New styles */
+
+.center-features-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem 2rem;
+    background-color: black;
+    color: white;
+    min-height: 100vh;
+}
+
+.center-content-wrapper {
+    display: flex;
+    gap: 4rem;
+    max-width: 1400px;
+    width: 100%;
+    align-items: center;
+}
+
+.center-image-section {
+    flex: 1;
+    max-width: 50%;
+    background-image: url('city-police-car-side.webp');
+    background-size: cover;
+    background-position: center;
+    height: 90vh;
+    border-radius: 8px;
+}
+
+.center-text-section {
+    flex: 1;
+    max-width: 50%;
+    text-align: left;
+    /* Align text to the left */
+}
+
+.center-title {
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 3rem;
+    line-height: 1.2;
+}
+
+.center-features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.center-feature-item h3 {
+    color: #fff;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.center-feature-item p {
+    color: #999;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.before-footer-hero-container {
+    background-image: url('traffic-cape-town-police.png');
+    background-size: cover;
+    background-position: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+    height: 100vh;
+    /* Ensure it spans the entire viewport height */
+    width: 100vw;
+    /* Ensure it spans the entire viewport width */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+}
+
+.before-footer-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 1;
+}
+
+.before-footer-hero-title {
+    color: white;
+    font-size: 4rem;
+    font-weight: normal;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.before-footer-hero-text {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.before-footer-cta-button {
+    background-color: transparent;
+    /* No fill */
+    color: orange;
+    /* Orange text */
+    border: 2px solid orange;
+    /* Orange border */
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.before-footer-cta-button:hover {
+    background-color: rgba(255, 165, 0, 0.1);
+    /* Light orange fill on hover */
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .before-footer-hero-title {
+        font-size: 3rem;
+    }
+
+    .before-footer-hero-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .before-footer-hero-title {
+        font-size: 2.5rem;
+    }
+
+    .before-footer-hero-container {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .center-content-wrapper {
+        flex-direction: column;
+    }
+
+    .center-image-section,
+    .center-text-section {
+        max-width: 100%;
+    }
+
+    .center-title {
+        font-size: 2rem;
+    }
+}

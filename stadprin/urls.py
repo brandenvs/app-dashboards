@@ -5,5 +5,8 @@ from . import views
 app_name = 'stadprin'
 
 urlpatterns = [
-    path('', views.temp, name='temp'),
+    path('', views.index, name='home'),  # Index(home) page
+    path('career/', views.career, name='career'),  # Career page
+    path('contact/', views.contact, name='contact'),  # Contact page
+    
 ]

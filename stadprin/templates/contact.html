@@ -1,0 +1,100 @@
+{% extends 'sd_base.html' %}
+
+{% block title %}Careers - StadPrin{% endblock %}
+
+{% load static %}
+
+{% block site-css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-evenly">
+    <nav class=" breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Contact Form</a></li>
+        </ul>
+    </nav>
+
+    {% if message %}
+    <div class="box">{{ message }}</div>
+    {% endif %}
+
+    <form method="post" action="{% url 'stadprin:contact' %}">
+        {% csrf_token %}
+
+        <div class="row g-2">
+            <div class="col-md-6 col-12">
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control">
+                        <input name="name" class="input" type="text" placeholder="John Doe" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="field">
+                    <label class="label">Email Address</label>
+                    <div class="control">
+                        <input name="email_address" class="input" type="email" placeholder="john@doe.com" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="field">
+                    <label class="label">Contact Number (optional)</label>
+                    <div class="control">
+                        <input name="contact_number" class="input" type="tel" placeholder="+27 81 555 9999">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="field">
+                    <label class="label">Message</label>
+                    <div class="control">
+                        <textarea name="message" class="textarea" placeholder="Type here ..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="field mt-3">
+                    <div class="control">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            I agree to the <a href="#">terms and conditions</a>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Receive occasional updates via email?</label>
+
+                    <div class="control">
+                        <label class="radio">
+                            <input type="radio" name="question">
+                            Yes
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="question">
+                            No
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-12">
+                <div class="field is-grouped mt-3">
+                    <div class="control">
+                        <button class="button is-link cta-button" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
