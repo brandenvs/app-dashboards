@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'hyperion',
     'portal',
     'stadprin',
+    'stadprin',
     'user_auth',
     'stadprin',
     'corsheaders',
@@ -35,7 +36,6 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'labSite.redirect_middleware.DomainRedirectMiddleware', # Custom middleware
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',    
     'django.middleware.security.SecurityMiddleware',
@@ -59,7 +59,7 @@ SESSION_COOKIE_SECURE = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 # CSRF Tokenization
-CSRF_TRUSTED_ORIGINS = ['https://br-code.bcodelabs.com']
+CSRF_TRUSTED_ORIGINS = ['https://br-code.bcodelabs.com', 'https://spt.bcodelabs.com', 'https://stadprin.com']
 CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'labSite.urls'
