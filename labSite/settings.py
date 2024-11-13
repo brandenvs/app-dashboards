@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'standalone',
     'hyperion',
     'portal',
+    'stadprin',
     'user_auth',
     'stadprin',
     'corsheaders',
@@ -58,7 +59,7 @@ SESSION_COOKIE_SECURE = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 # CSRF Tokenization
-CSRF_TRUSTED_ORIGINS = ['https://spt.bcodelabs.com', 'https://stadprin.com/']
+CSRF_TRUSTED_ORIGINS = ['https://br-code.bcodelabs.com']
 CSRF_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'labSite.urls'
