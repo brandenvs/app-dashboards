@@ -1,7 +1,6 @@
 body {
     font-family: 'Lato', sans-serif;
     line-height: 1.6;
-    max-width: 800px;
     margin: 0 auto;
     padding: 2rem;
     background-color: black;
@@ -62,10 +61,102 @@ p {
 }
 
 .linkedin-logo {
-    width: 24px; /* Adjust the width as needed */
-    height: 24px; /* Adjust the height as needed */
+    width: 24px;
+    /* Adjust the width as needed */
+    height: 24px;
+    /* Adjust the height as needed */
     background-image: url('In-Blue.png');
     background-size: contain;
     background-repeat: no-repeat;
     display: inline-block;
+}
+
+.contact-letter-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.contact-field-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.contact-field-group input,
+.contact-field-group textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: white;
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.5rem 0;
+    outline: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-field-group label {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.7);
+    pointer-events: none;
+}
+
+.contact-field-group textarea+label {
+    top: 1rem;
+}
+
+.contact-field-group input:focus+label,
+.contact-field-group textarea:focus+label,
+.contact-field-group input:not(:placeholder-shown)+label,
+.contact-field-group textarea:not(:placeholder-shown)+label {
+    top: -1rem;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.contact-field-group textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.contact-optional {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.875rem;
+    margin-left: 0.5rem;
+}
+
+.contact-button {
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem 2rem;
+    font-family: inherit;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 2rem;
+}
+
+.contact-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-letter-header {
+    margin-bottom: 3rem;
+}
+
+.contact-letter-footer {
+    margin-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+}
+
+.contact-date {
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2rem;
 }

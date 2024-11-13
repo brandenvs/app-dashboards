@@ -4,16 +4,12 @@
 
 {% load static %}
 
-{% block site-css %}
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-{% endblock %}
-
 {% block content %}
 <div class="d-flex justify-content-evenly">
     <nav class=" breadcrumb" aria-label="breadcrumbs">
         <ul>
             <li><a href="/">Home</a></li>
-            <li class="is-active"><a href="#" aria-current="page">Contact Form</a></li>
+            <li class="is-active ">Contact Form</li>
         </ul>
     </nav>
 
@@ -21,7 +17,50 @@
     <div class="box">{{ message }}</div>
     {% endif %}
 
-    <form method="post" action="{% url 'stadprin:contact' %}">
+    <form action="{% url 'stadprin:contact' %}" method="post" class="contact-letter-form">
+        {% csrf_token %}
+
+        <h4 style="padding: 50px;"></h4>
+        <!-- <div class="contact-letter-header">
+            <div class="contact-date">
+                <script>
+                    document.write(new Date().toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    }));
+                </script>
+            </div>
+        </div> -->
+
+        <div class="contact-field-group">
+            <input type="text" id="name" placeholder=" " name="name" required>
+            <label for="name">Name</label>
+        </div>
+
+        <div class="contact-field-group">
+            <input type="email" id="email" placeholder=" " name="email_address" required>
+            <label for="email">Email</label>
+        </div>
+
+        <div class="contact-field-group">
+            <input type="tel" id="phone" name="contact_number" placeholder=" ">
+            <label for="phone">Contact Number <span class="contact-optional">(optional)</span></label>
+        </div>
+
+        <div class="contact-field-group">
+            <textarea id="message" placeholder=" " name="message" required></textarea>
+            <label for="message">Message</label>
+        </div>
+
+        <button type="submit" class="contact-button">Send Demo Request</button>
+
+        <div class="contact-letter-footer" hidden>
+            <p>Sincerely,</p>
+            <p>[Your name will appear here after submission]</p>
+        </div>
+    </form>
+    <form method="post" action="{% url 'stadprin:contact' %}" hidden>
         {% csrf_token %}
 
         <div class="row g-2">

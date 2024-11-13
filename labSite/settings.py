@@ -22,7 +22,6 @@ INSTALLED_APPS = [
     'standalone',
     'hyperion',
     'portal',
-    'stadprin',
     'user_auth',
     'stadprin',
     'corsheaders',

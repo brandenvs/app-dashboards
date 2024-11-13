@@ -14,7 +14,7 @@
 
 <head>
     <!--(PRIMARY) Meta Data-->
-    <meta http-equiv="content-type" content="width=device-width, initial-scale=1.0" />
+
     <meta name="StadPrin" content="StadPrin" />
     <meta name="keywords"
         content="Automated Policing,Artificial Intelligence,Technical Automation,Data Science,South African Cities, South African Police" />
@@ -36,6 +36,7 @@
     <!-- instructs search engines -->
     <meta name="robots" content="index, follow" />
 
+
     <!-- landing page-->
     <title>{% block title %}{% endblock %}</title>
 
@@ -45,6 +46,9 @@
 
     <!-- Links-->
     <link rel="stylesheet" href="{% static 'styles.css'  %}">
+    <link rel="stylesheet" href="{% static 'career.css'  %}">
+    <!-- Bootstrap -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
@@ -57,9 +61,10 @@
         html,
         body {
             height: 100%;
+            min-width: 100%;
         }
 
-        .wrstadpriner {
+        .wrapper {
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -87,12 +92,9 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer>
-        <p>&copy; 2023 StadPrin (PTY) LTD. All rights reserved.</p>
-    </footer>
 
     {% block site-js %}{% endblock %}
-
+    <script type="text/javascript" src="{% static 'button-animation-simple.js'  %}"></script>
 </body>
 
 </html>
