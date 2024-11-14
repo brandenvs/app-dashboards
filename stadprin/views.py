@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from .models import Contact
+from django.http import HttpResponse
+
 
 def index(request):
     return render(request, 'index.html')
@@ -23,7 +25,7 @@ def contact(request):
             message=message
         )
         contact.save()
-        return render(request, 'contact.html',{'message': 'Message has been sent!'})
+        return render(request, 'contact.html',{'message': 'Message has been sent! Please wait while we redirect you...'})
         # return HttpResponseRedirect(reverse('app:contact'), {'message': 'Message has been sent!'})
     return render(request, 'contact.html')
 

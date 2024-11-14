@@ -160,3 +160,7 @@ p {
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 2rem;
 }
+
+.box {
+    color: white;
+}
