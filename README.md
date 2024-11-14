@@ -7,4 +7,4 @@
 | --------------------- | --------------- | -------------------------- |
 | Branden van Staden | +27 81 565 0206 | brandenconnected@gmail.com |
 
-Visit Deployment of Current Version: [br-code.bcodelabs.com](https://portal.bcodelabs.com)
+Visit Deployment of Current Version: [bcodelabs.com](https://spt.bcodelabs.com)
