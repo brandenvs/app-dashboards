@@ -4,13 +4,13 @@ body {
     margin: 0 auto;
     padding: 2rem;
     background-color: black;
-    color: white;
 }
 
 .careers-container {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    margin: 1.5rem;
 }
 
 h1 {

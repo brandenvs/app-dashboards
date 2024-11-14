@@ -95,7 +95,6 @@ nav ul li a {
     color: white;
     width: 100%;
     max-width: 100%;
-    margin: 2rem 0;
     text-align: center;
 }
 
@@ -634,4 +633,102 @@ footer {
     .center-title {
         font-size: 2rem;
     }
+}
+
+*,
+:before,
+:after {
+    box-sizing: inherit;
+    margin: 0;
+}
+
+html {
+    --i: var(--wide, 1);
+    --ci: calc(1 - var(--i));
+    background: whitesmoke;
+}
+
+@media (max-width: 775px) {
+    html {
+        --wide: 0;
+    }
+}
+
+@media (max-width: 250px) {
+    html {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 185px) {
+    html {
+        font-size: 0.5em;
+    }
+}
+
+body {
+    filter: drop-shadow(0 1em 1em rgba(0, 0, 0, 0.2));
+}
+
+article {
+    --d: calc(var(--i)*4em + var(--ci)*1.375*1em);
+    box-sizing: border-box;
+    display: grid;
+    grid-gap: 0px calc(var(--i)*5em);
+    grid-template: repeat(2, max-content)/var(--d) 1fr;
+    position: relative;
+    margin: 1em auto;
+    border: solid 0.5em transparent;
+    padding: 0.125em;
+    width: calc(var(--i)*32em + var(--ci)*100%);
+    min-height: 5em;
+    border-radius: calc(var(--i)*2.5em);
+    background: radial-gradient(circle at 0 10em, rgba(0, 0, 0, calc(var(--i)*.8)) 2.5em, transparent 11.25em) border-box, linear-gradient(#dbdbdb, #fff) content-box, linear-gradient(var(--slist)) padding-box, linear-gradient(#fff, #dcdcdc) border-box;
+    font: 1.5em/1.375 trebuchet ms, verdana, sans-serif;
+    clip-path: var(--wide, inset(0 round 2.5em));
+    counter-increment: c;
+    color: black;
+}
+
+article:before {
+    position: absolute;
+    top: -0.5em;
+    left: -0.5em;
+    width: 9.5em;
+    height: calc(var(--i)*5em);
+    transform-origin: 100% 100%;
+    transform: skewx(45deg);
+    box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(#fff, #e4e4e4);
+    content: var(--wide, "");
+}
+
+article:after {
+    display: grid;
+    place-content: center;
+    grid-row: 1/span calc(1 + var(--i));
+    position: relative;
+    border: solid calc(var(--i)*0.5em) transparent;
+    margin: calc(var(--i)*-0.125em + var(--ci)*.25rem);
+    width: var(--d);
+    height: var(--d);
+    border-radius: 50%;
+    box-shadow: inset 0 0 1px 1px #efefef, inset 0 -0.5em rgba(0, 0, 0, 0.1);
+    background: linear-gradient(var(--slist)) padding-box, linear-gradient(#d0d0d0, #e7e7e7) border-box;
+    color: #fff;
+    text-align: center;
+    content: counter(c, decimal-leading-zero);
+}
+
+h3,
+p {
+    padding: 0 0.5rem;
+}
+
+h3 {
+    font-size: 1.25em;
+}
+
+p {
+    grid-column: var(--ci)/span calc(1 + var(--ci));
 }

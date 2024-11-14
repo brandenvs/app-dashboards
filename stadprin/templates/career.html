@@ -8,9 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Careers</title>
     <link rel="stylesheet" href="{% static 'career.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css'  %}">
+
 </head>
 
 <body>
+    <nav class=" breadcrumb" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="/">Home</a></li>
+        </ul>
+    </nav>
     <div class="careers-container">
         <h1>Careers</h1>
 
@@ -53,14 +60,15 @@
             <p class="company">Stadprin</p>
         </div>
 
-        <a href="https://www.linkedin.com" class="linkedin-link">
-            <img class="linkedin-logo" alt="LinkedIn Logo">
-            See our openings
-        </a>
     </div>
 
-    <a href="https://www.linkedin.com/company/your-company" class="linkedin-link">
+    <a href="https://www.linkedin.com/company/stadprin" class="linkedin-link">
         <img src="{% static 'In-Blue.png' %}" alt="LinkedIn Logo">
         See our openings
     </a>
     </div>
+    <script type="text/javascript" src="{% static 'button-animation-simple.js'  %}"></script>
+
+</body>
+
+</html>
