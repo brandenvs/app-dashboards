@@ -12,51 +12,23 @@
 <!--Body Content-->
 {% block content %}
 <link rel="stylesheet" href="{% static 'progression-tracker.css'  %}" />
-<style>
-    .resizable {
-        width: 600px;
-        height: 400px;
-        overflow: auto;
-        resize: both;
-        /* Allows both horizontal and vertical resizing */
-        border: 1px solid #ccc;
-    }
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-    #myIframe {
+<style>
+
+    #progressionChart {
         width: 100%;
-        height: 100%;
+        min-height: 600px;  /* Increased minimum height */
+        margin: 2rem 0;     /* Added vertical margin */
     }
 </style>
 
-<div class="row">
-    <div class="col-12">
-        <div id="bar-chart"></div>
-        <p class="fw-light">Current Students Tracked</p>
-    </div>
-    {% for student_name, levels in view_dict.items %}
-    <div class="col-12">
-        <p class="fw-semibold">{{ student_name }}</p>
-    </div>
-    {% for level, progression in levels.items %}
-    <div class="col-12">
-        <p class="fs-4 fw-bolder">{{ level }} - {{ progression }}</p>
-    </div>
-    {% endfor %}
-    {% endfor %}
-</div>
-</div>
-<div class="progress-pie-chart" data-percent="50">
-    <div class="ppc-progress">
-        <div class="ppc-progress-fill"></div>
-    </div>
-    <div class="ppc-percents">
-        <div class="pcc-percents-wrapper">
-            <span>%</span>
-        </div>
-    </div>
-</div>
 <!--Google Sheet-->
 <div class="row g-2">
+    <div class="col-12">
+        <div id="progressionChart"></div>
+    </div>
+
     <div class="col-12">
         {% if messages %}
         {% for message in messages %}
@@ -73,17 +45,18 @@
         {% endif %}
     </div>
 
-    <div class="col-12">
+    <div class="col-12" hidden>
         <div class="d-flex align-items-center">
             <div class="spinner-border" role="status" id="spinner">
                 <span class="visually-hidden">Loading...</span>
             </div>
             <div id="response"></div>
-            <div class="flex-shrink-0 resizeable" id="studentIframe" style=" min-width: 100%; overflow: hidden;">
+            <div class="" id="studentIframe" style=" min-width: 100%; overflow: hidden;">
                 <iframe id="googleSheetFrame" class="frame" src="" id="myIframe" frameborder="0" height="200"></iframe>
             </div>
         </div>
     </div>
+
     <div class="col-12">
         <div class="flex-grow-1">
             {% if user.is_authenticated %}
@@ -125,11 +98,10 @@
                 <div class="col">
                     <p class="fw-bold fs-4 text-black">Remove student portfolio</p>
                     <ul class="list-group">
-                        {% for db_student in db_students %}
+                        {% for student in chart_data.students %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {{ db_student.fullname }}
-
-                            <button type="button" onclick="deletePort('{{ db_student.fullname }}')"
+                            {{ student }}
+                            <button type="button" onclick="deletePort('{{ data.fullname }}')"
                                 class="badge text-bg-danger rounded-pill">
                                 <i class="far fa-trash-can fa-2x"></i>
                             </button>
@@ -161,6 +133,7 @@
         $('.ppc-percents span').html(percent + '%');
     });
 </script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         $('#spinner').hide();
@@ -193,44 +166,177 @@
         });
     });
 </script>
+
 <script type="text/javascript">
     const iframe = document.getElementById('googleSheetFrame');
     const baseSrc = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&single=true&widget=true&headers=false";
 
     // Append a cache-busting parameter (timestamp)
     iframe.src = `${baseSrc}&cachebuster=${new Date().getTime()}`;
+
     document.addEventListener('DOMContentLoaded', function () {
         var toastElList = [].slice.call(document.querySelectorAll('.toast'))
         var toastList = toastElList.map(function (toastEl) {
             return new bootstrap.Toast(toastEl)
-        })
+        });
 
         toastList.forEach(toast => toast.show());
     });
 </script>
+
 <script type="text/javascript">
     $(document).ajaxStart(function () {
         $("#svgloader").removeClass("d-none");
-    }).ajaxStop(function () {
+
+           }).ajaxStop(function () {
         $("#svgloader").addClass("d-none");
     });
 </script>
-<script>
 
-    const contentBlock = $("#content-block")[0]; // Get the native DOM element from jQuery
+<script>
+    const contentBlock = $("#content-block")[0];
 
     const observer = new MutationObserver(() => {
         $("#svgloader").addClass("d-none");
         $("#content-block").removeClass("d-none");
-        observer.disconnect(); // Stop observing if you only need this once
+        observer.disconnect();
     });
 
     observer.observe(contentBlock, { childList: true, subtree: true });
-
 
     window.onload = function () {
         $("#svgloader").addClass("d-none");
         $("#content-block").removeClass("d-none");
     };
 </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+    
+    // Define total tasks for each level
+    const TOTAL_TASKS = {
+        level1: 30,
+        level2: 23,
+        level3: 13
+    };
+    
+    // Calculate completion percentages
+    const calculatePercentages = (values, totalTasks) => {
+        return values.map(value => (value / totalTasks) * 100);
+    };
+
+    // Calculate actual completion text
+    const getCompletionText = (values, totalTasks) => {
+        return values.map(value => `${value}/${totalTasks} (${Math.round((value/totalTasks) * 100)}%)`);
+    };
+
+    const trace1 = {
+        x: chartData.students,
+        y: calculatePercentages(chartData.level1, TOTAL_TASKS.level1),
+        name: 'Level 1 (30 tasks)',
+        type: 'bar',
+        text: getCompletionText(chartData.level1, TOTAL_TASKS.level1),
+        textposition: 'auto',
+        width: 0.2  // Adjust bar width
+    };
+    
+    const trace2 = {
+        x: chartData.students,
+        y: calculatePercentages(chartData.level2, TOTAL_TASKS.level2),
+        name: 'Level 2 (23 tasks)',
+        type: 'bar',
+        text: getCompletionText(chartData.level2, TOTAL_TASKS.level2),
+        textposition: 'auto',
+        width: 0.2  // Adjust bar width
+    };
+
+    const trace3 = {
+        x: chartData.students,
+        y: calculatePercentages(chartData.level3, TOTAL_TASKS.level3),
+        name: 'Level 3 (13 tasks)',
+        type: 'bar',
+        text: getCompletionText(chartData.level3, TOTAL_TASKS.level3),
+        textposition: 'auto',
+        width: 0.2  // Adjust bar width
+    };
+
+    const data = [trace1, trace2, trace3];
+
+    const layout = {
+        title: {
+            text: 'Student Progression by Level',
+            font: {
+                size: 24
+            },
+            y: 0.95
+        },
+        barmode: 'group',
+        bargap: 0.15,        // Gap between bar groups
+        bargroupgap: 0.1,    // Gap between bars in a group
+        xaxis: { 
+            title: {
+                text: 'Students',
+                font: {
+                    size: 16
+                },
+                standoff: 40  // Space between title and axis
+            },
+            tickangle: -45,   // Angle the x-axis labels
+            tickfont: {
+                size: 12
+            },
+            automargin: true  // Automatically adjust margins for labels
+        },
+        yaxis: { 
+            title: {
+                text: 'Completion Percentage',
+                font: {
+                    size: 16
+                },
+                standoff: 20  // Space between title and axis
+            },
+            range: [0, 100],
+            ticksuffix: '%',
+            tickfont: {
+                size: 12
+            }
+        },
+        showlegend: true,
+        legend: {
+            x: 1.1,          // Move legend further right
+            xanchor: 'left', // Anchor legend to left side
+            y: 1,
+            yanchor: 'top',
+            font: {
+                size: 12
+            },
+            bgcolor: 'rgba(255,255,255,0.8)',  // Semi-transparent background
+            bordercolor: 'rgba(0,0,0,0.1)',
+            borderwidth: 1
+        },
+        margin: {
+            l: 80,   // Increased left margin
+            r: 200,  // Increased right margin for legend
+            t: 80,   // Increased top margin
+            b: 100   // Increased bottom margin for x-axis labels
+        },
+        height: 600,  // Increased height
+        autosize: true,
+        paper_bgcolor: 'rgba(0,0,0,0)',  // Transparent background
+        plot_bgcolor: 'rgba(0,0,0,0)'    // Transparent plot area
+    };
+
+    const config = {
+        responsive: true,
+        displayModeBar: false,
+        scrollZoom: false
+    };
+
+    Plotly.newPlot('progressionChart', data, layout, config);
+});
+</script>
+{{ ... }}
+{{ block.super }}
+{{ chart_data|json_script:"chart-data" }}
 {% endblock %}
