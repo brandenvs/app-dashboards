@@ -23,6 +23,7 @@ def get_theme(request):
 
 
 def toggle_theme(request):
+    get_theme(request)
     selected_theme = str(request.session['selected_theme'])
     
     if selected_theme:
@@ -84,6 +85,7 @@ def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        print(username)
         
         try:
             # Authorize user
