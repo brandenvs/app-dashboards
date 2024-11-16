@@ -152,13 +152,11 @@ def scrap_port(port_url: str):
 
     try:
         accept_cookies(driver)
-
     except Exception as ex:
         print(ex)
         print('Cookies already accepted!')
 
     # Scrap student details
-
     fullname = driver.find_element(
         By.CLASS_NAME, 
         'profile__excerpt-fullname'
@@ -177,40 +175,32 @@ def scrap_port(port_url: str):
         'Level 3': {}
     }
 
-    # Scrap student levels
-    count = 0
-    while count < 4:
-        count += 1
+    # Scrap each level exactly once
+    levels = [
+        ('jsLevel1Tab', 'Level 1'),
+        ('jsLevel2Tab', 'Level 2'),
+        ('jsLevel3Tab', 'Level 3')
+    ]
 
-        # Scrap level 1
-        level_1 = driver.find_elements(By.ID, 'jsLevel1Tab')
-        if level_1:
-            WebDriverWait(driver, 10)\
-                .until(EC.element_to_be_clickable((By.ID, 'jsLevel1Tab'))).click()
+    for tab_id, level_name in levels:
+        try:
+            # Check if level tab exists
+            if len(driver.find_elements(By.ID, tab_id)) > 0:
+                # Wait for and click the tab
+                WebDriverWait(driver, 10)\
+                    .until(EC.element_to_be_clickable((By.ID, tab_id))).click()
+                
+                # Give the table time to load
+                time.sleep(1)
+                
+                # Scrape and process the table
+                lvl_table = scrap_table(driver, level_name)
+                totals = process_table(lvl_table)
+                data_scrapped[level_name] = totals
+        except Exception as e:
+            print(f"Error scraping {level_name}: {str(e)}")
+            continue
 
-            lvl_table = scrap_table(driver, 'Level 1')
-            totals = process_table(lvl_table)
-            data_scrapped.update({'Level 1': totals})
-
-        # Scrap level 2
-        level_2 = driver.find_elements(By.ID, 'jsLevel1Tab')
-        if level_2:
-            WebDriverWait(driver, 10)\
-                .until(EC.element_to_be_clickable((By.ID, 'jsLevel2Tab'))).click()
-
-            lvl_table = scrap_table(driver, 'Level 2')
-            totals = process_table(lvl_table)
-            data_scrapped.update({'Level 2': totals})
-
-        # Scrap level 3
-        level_3 = driver.find_elements(By.ID, 'jsLevel3Tab')
-        if level_3:
-            WebDriverWait(driver, 10)\
-                .until(EC.element_to_be_clickable((By.ID, 'jsLevel3Tab'))).click()
-
-            lvl_table = scrap_table(driver, 'Level 3')
-            totals = process_table(lvl_table)
-            data_scrapped.update({'Level 3': totals})
     return data_scrapped
 
 
