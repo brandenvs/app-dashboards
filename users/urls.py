@@ -11,6 +11,5 @@ urlpatterns = [
 
     path('fetch-theme/', views.get_theme, name='get_theme'),
     path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
-    path('toggle-theme/', views.toggle_theme, name='toggle_theme'),
     
 ]

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Glow Progress</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/alphardex/aqua.css/dist/aqua.min.css'>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: black;
+        }
+
+        .progress .progress-inner {
+            stroke-dasharray: 250;
+            stroke-dashoffset: 250;
+            animation: progress-anime 10s linear infinite;
+        }
+
+        @keyframes progress-anime {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+
+
+        .progress {
+            animation: rotate-circle 3s linear infinite;
+        }
+
+        @keyframes rotate-circle {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- partial:index.partial.html -->
+    <div class="absolute hv-center">
+        <svg class="progress" width="100%" height="100%" viewBox="0 0 100 100" version="1.1"
+            xmlns="http://www.w3.org/2000/svg" style="transform: rotate(-90deg);">
+            <circle class="progress-outer" cx="50" cy="50" r="30" stroke="#3388BB" stroke-width="0.5px"
+                fill="transparent" opacity="0.2"></circle>
+            <circle class="progress-inner" cx="50" cy="50" r="30" stroke="#3388BB" stroke-width="0.5px"
+                stroke-linecap="square" fill="transparent" opacity="0.8" filter="url(#sofGlow)"></circle>
+            <defs>
+                <filter id="sofGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feMorphology operator="dilate" radius="3 3" in="SourceAlpha" result="morphology" />
+                    <feGaussianBlur stdDeviation="8 8" in="morphology" edgeMode="none" result="blur" />
+                    <feFlood flood-color="#04aee7" flood-opacity="0.6" result="flood" />
+                    <feComposite in="flood" in2="blur" operator="in" result="composite" />
+                    <feMorphology operator="dilate" radius="0.1 0.1" in="SourceAlpha" result="morphology1" />
+                    <feGaussianBlur stdDeviation="3 3" in="morphology1" edgeMode="none" result="blur1" />
+                    <feFlood flood-color="#ffffff" flood-opacity="0.4" result="flood1" />
+                    <feComposite in="flood1" in2="blur1" operator="in" result="composite1" />
+                    <feComposite in="composite" in2="composite1" operator="lighter" result="composite2" />
+                    <feMerge result="merge">
+                        <feMergeNode in="composite2" />
+                        <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                </filter>
+            </defs>
+        </svg>
+    </div>
+    <!-- partial -->
+    <p><small style="color: antiquewhite;">Coming Soon ...</small></p>
+</body>
+
+</html>

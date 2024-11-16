@@ -1,0 +1,135 @@
+{% block title %}Contact - StadPrin{% endblock %}
+
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'career.css' %}">
+
+{% if message %}
+<div class="box">
+    <h4>{{ message }}</h4>
+</div>
+
+{% endif %}
+
+<form action="{% url 'stadprin:contact' %}" method="post" class="contact-letter-form">
+    {% csrf_token %}
+    <div class="contact-letter-header">
+        <div class="contact-date">
+            <script>
+                document.write(new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                }));
+            </script>
+        </div>
+    </div>
+
+    <div class="contact-field-group">
+        <input type="text" id="name" name="name" placeholder=" " required>
+        <label for="name">Name</label>
+    </div>
+
+    <div class="contact-field-group">
+        <input type="email" id="email_address" name="email_address" placeholder=" " required>
+        <label for="email">Email</label>
+    </div>
+
+    <div class="contact-field-group">
+        <input type="tel" id="phone" placeholder=" " name="contact_number">
+        <label for="phone">Contact Number <span class="contact-optional">(optional)</span></label>
+    </div>
+
+    <div class="contact-field-group">
+        <textarea id="message" placeholder=" " name="message" required></textarea>
+        <label for="message">Message</label>
+    </div>
+
+    <button type="" class="contact-button">Send Demo Request</button>
+
+    <div class="contact-letter-footer">
+        <p>Sincerely,</p>
+        <p>[Your name will appear here after submission]</p>
+    </div>
+</form>
+
+<!-- This is a bootstrap and responsive form -->
+<form method="post" action="{% url 'stadprin:contact' %}" hidden>
+    {% csrf_token %}
+
+    <div class="row g-2">
+        <div class="col-md-6 col-12">
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    <input name="name" class="input" type="text" placeholder="John Doe" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="field">
+                <label class="label">Email Address</label>
+                <div class="control">
+                    <input name="email_address" class="input" type="email" placeholder="john@doe.com" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="field">
+                <label class="label">Contact Number (optional)</label>
+                <div class="control">
+                    <input name="contact_number" class="input" type="tel" placeholder="+27 81 555 9999">
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="field">
+                <label class="label">Message</label>
+                <div class="control">
+                    <textarea name="message" class="textarea" placeholder="Type here ..."></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="field mt-3">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox">
+                        I agree to the <a href="#">terms and conditions</a>
+                    </label>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Receive occasional updates via email?</label>
+
+                <div class="control">
+                    <label class="radio">
+                        <input type="radio" name="question">
+                        Yes
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="question">
+                        No
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-12">
+            <div class="field is-grouped mt-3">
+                <div class="control">
+                    <button class="button is-link cta-button" type="submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

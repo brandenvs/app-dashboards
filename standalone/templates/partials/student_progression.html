@@ -7,7 +7,11 @@
 
 {% block breadcrumb-2-label %}Progression Tracker{% endblock %}
 
+{% load static %}
+
+<!--Body Content-->
 {% block content %}
+<link rel="stylesheet" href="{% static 'progression-tracker.css'  %}" />
 <style>
     .resizable {
         width: 600px;
@@ -23,7 +27,35 @@
         height: 100%;
     }
 </style>
-<!--Body Content-->
+
+<div class="row">
+    <div class="col-12">
+        <div id="bar-chart"></div>
+        <p class="fw-light">Current Students Tracked</p>
+    </div>
+    {% for student_name, levels in view_dict.items %}
+    <div class="col-12">
+        <p class="fw-semibold">{{ student_name }}</p>
+    </div>
+    {% for level, progression in levels.items %}
+    <div class="col-12">
+        <p class="fs-4 fw-bolder">{{ level }} - {{ progression }}</p>
+    </div>
+    {% endfor %}
+    {% endfor %}
+</div>
+</div>
+<div class="progress-pie-chart" data-percent="50">
+    <div class="ppc-progress">
+        <div class="ppc-progress-fill"></div>
+    </div>
+    <div class="ppc-percents">
+        <div class="pcc-percents-wrapper">
+            <span>%</span>
+        </div>
+    </div>
+</div>
+<!--Google Sheet-->
 <div class="row g-2">
     <div class="col-12">
         {% if messages %}
@@ -39,9 +71,9 @@
         </div>
         {% endfor %}
         {% endif %}
-
     </div>
-    <div class="col-md-9 col-12">
+
+    <div class="col-12">
         <div class="d-flex align-items-center">
             <div class="spinner-border" role="status" id="spinner">
                 <span class="visually-hidden">Loading...</span>
@@ -115,7 +147,21 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 {% block javascript %}
+<script type="text/javascript" src="{% static 'progression-tracker.js' %}"></script>
+
 <script>
+    $(function () {
+        var $ppc = $('.progress-pie-chart'),
+            percent = parseInt($ppc.data('percent')),
+            deg = 360 * percent / 100;
+        if (percent > 50) {
+            $ppc.addClass('gt-50');
+        }
+        $('.ppc-progress-fill').css('transform', 'rotate(' + deg + 'deg)');
+        $('.ppc-percents span').html(percent + '%');
+    });
+</script>
+<script type="text/javascript">
     $(document).ready(function () {
         $('#spinner').hide();
         $('#spinner2').hide();
@@ -147,8 +193,7 @@
         });
     });
 </script>
-
-<script>
+<script type="text/javascript">
     const iframe = document.getElementById('googleSheetFrame');
     const baseSrc = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSb7mUSkZwm0Z3vTrJQYpnsxMo9HZ2eCyv2fzn8BCR4riOHgtyXKcs8Rc9nl0Ri8IAK8KEH-ek7eLp4/pubhtml?gid=0&single=true&widget=true&headers=false";
 
@@ -162,14 +207,30 @@
 
         toastList.forEach(toast => toast.show());
     });
-
 </script>
-
 <script type="text/javascript">
     $(document).ajaxStart(function () {
         $("#svgloader").removeClass("d-none");
     }).ajaxStop(function () {
         $("#svgloader").addClass("d-none");
     });
+</script>
+<script>
+
+    const contentBlock = $("#content-block")[0]; // Get the native DOM element from jQuery
+
+    const observer = new MutationObserver(() => {
+        $("#svgloader").addClass("d-none");
+        $("#content-block").removeClass("d-none");
+        observer.disconnect(); // Stop observing if you only need this once
+    });
+
+    observer.observe(contentBlock, { childList: true, subtree: true });
+
+
+    window.onload = function () {
+        $("#svgloader").addClass("d-none");
+        $("#content-block").removeClass("d-none");
+    };
 </script>
 {% endblock %}

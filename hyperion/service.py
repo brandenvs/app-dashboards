@@ -17,7 +17,7 @@ from googleapiclient.errors import HttpError
 
 from labSite.settings import CREDS_FILE
 
-from .models import dbStudent
+from .models import StudentProgress
 
 
 class Student:
@@ -89,8 +89,6 @@ def get_student(driver: webdriver.Edge) -> Student:
 def get_table(driver: webdriver.Edge, level: str) -> list[StuRecord]:
     student_records = []
 
-    # Locate table object
-    # get_table = driver.find_element(By.CLASS_NAME, 'table')/html/body/div[1]/div/div[2]/div[1]/section[1]/div[3]/div/div[2]/div/table
     if level == 'Level 1':
         get_table = driver.find_element(By.ID, 'jsLevel1')
     elif level == 'Level 2':
@@ -221,7 +219,7 @@ def data_processing(driver: webdriver.Edge, level: str):
     return total_completed, total_below, total_incomplete, total_resubmissions
 
 def main():
-    port_urls = dbStudent.objects.values_list('portfolio_url', flat=True)    
+    port_urls = StudentProgress.objects.values_list('portfolio_url', flat=True)    
     
     scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
 
@@ -239,24 +237,32 @@ def main():
     print('Clearing sheet response: ', response)
 
     pos = 2
-    
+    db_students = StudentProgress.objects.all()
+
+    current_url = None
+
     for url in port_urls:
+        if current_url == url:
+            continue
+
+        current_url = url
+
         print('Loaded URL: ', url)
         count = 0
         driver = get_driver(url) # Start new webdriver
         driver = accept_cookies(driver) # Accept cookie prompt        
         student = get_student(driver) # Student identifier details
         level = 'Level 1'
-        
+
         if 'Skills' in student.bootcamp:
             print('Student is DfE...')
             student.is_dfe
-            
+
         while count < 4:
             total_completed, total_below, total_incomplete, total_resubmissions = data_processing(driver, level)
             count += 1
 
-            if count == 0:
+            if count == 0: # Redundancy
                 update_values(
                     "1d-7QcJylWTz5rNUjNjMEhPnFzZUaJ3nne3GgpFzJ9yo",
                     f"A{pos}:H{pos}",
@@ -293,13 +299,30 @@ def main():
                 )
 
             try:
-                db_student = dbStudent.objects.get(portfolio_url=url, fullname='not-set')
-                if db_student:
-                    db_student.fullname = student.fullname
-                    db_student.bootcamp = student.bootcamp
-                    db_student.save()  # Save the changes to the database
-            except:
-                print('Student already has properties set: ', student.fullname)
+                student_progress = db_students.get(portfolio_url=str(url), level=str(level))
+                
+                student_progress.fullname = student.fullname
+                student_progress.bootcamp = student.bootcamp
+                student_progress.level = level
+                student_progress.portfolio_url = url
+                student_progress.completed = total_completed
+                student_progress.incomplete = total_incomplete
+                student_progress.resubmitted = total_resubmissions
+                student_progress.below_100 = total_below                   
+
+            except Exception as ex:
+                print('Unable to update or create new db_Student', ex)
+                student_progress = StudentProgress(
+                        fullname=student.fullname,
+                        bootcamp=student.bootcamp,
+                        level=str(level),
+                        portfolio_url=str(url),
+                        completed=total_completed,
+                        incomplete=total_incomplete,
+                        resubmitted=total_resubmissions,
+                        below_100=total_below                    
+                    )    
+            student_progress.save()  # Save the changes to the database
 
             if 'Skills' in student.bootcamp:
                 print('Student is DfE...')

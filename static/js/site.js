@@ -1,18 +1,15 @@
-window.onload = function () {
-    const checkbox = document.getElementById("checkbox");
-    const toastLiveExample = document.getElementById('errorToast');
-    const toast = new bootstrap.Toast(toastLiveExample, { autohide: true });
-
-    checkbox.addEventListener("change", () => {
-        toggleTheme();
-    });
-};
+const checkbox = document.getElementById("checkbox");
+const toastLiveExample = document.getElementById('errorToast');
+const toast = new bootstrap.Toast(toastLiveExample, { autohide: true });
+checkbox.addEventListener("change", () => {
+    toggleTheme();
+});
 
 function getTheme() {
     selectedTheme = '';
 
     $.ajax({
-        url: '/fetch-theme/',
+        url: '/users/fetch-theme/',
         type: 'GET',
         success: function (response) {
             selectedTheme = response;
@@ -31,7 +28,7 @@ function getTheme() {
 
 function toggleTheme() {
     $.ajax({
-        url: '/toggle-theme/',
+        url: '/users/toggle-theme/',
         type: 'GET',
 
         success: function (response) {
