@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Contact
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -9,6 +10,7 @@ def index(request):
 
 def career(request):
     return render(request, 'career.html')
+
 
 def contact(request):
     if request.method == 'POST':
@@ -29,3 +31,7 @@ def contact(request):
         # return HttpResponseRedirect(reverse('app:contact'), {'message': 'Message has been sent!'})
     return render(request, 'contact.html')
 
+
+@login_required(login_url='users:signup')
+def gantt_chart(request):
+    return render(request, 'apd_gantt_chart.html')
