@@ -5,7 +5,12 @@
 <!--Body Content-->
 
 {% block content %}
+<div class="p-2">
+    <a href="{% url 'users:login' %}" class="btn btn-secondary">Go to Login</a>
+
+</div>
 <div class="d-flex justify-content-center m-4">
+
     <form action="{% url 'users:signup' %}" id="myForm" method="post">
         {% csrf_token %}
         <h2 class="text-end">📝 Please complete the following fields.</h2>
