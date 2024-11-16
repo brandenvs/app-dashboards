@@ -32,6 +32,5 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-@login_required(login_url='users:signup')
 def gantt_chart(request):
     return render(request, 'apd_gantt_chart.html')
