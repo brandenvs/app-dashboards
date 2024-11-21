@@ -8,7 +8,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ENV_PATH = os.path.join(BASE_DIR, '.env')
 config._find_file(ENV_PATH)
 
-# Quick-start development settings
 SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', cast=bool)
