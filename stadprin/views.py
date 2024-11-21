@@ -7,12 +7,7 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, 'index.html')
 
-
-def career(request):
-    return render(request, 'career.html')
-
-
-def contact(request):
+def contact(request): # NOTE This has been removed
     if request.method == 'POST':
         name = request.POST.get('name')
         email_address = request.POST.get('email_address')
