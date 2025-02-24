@@ -6,5 +6,6 @@ app_name = 'standalone'
 
 urlpatterns = [
     path('progression-tracker/', views.progression_tracker, name='progression_tracker'),
+        path('bt-bot/', views.bt_bot, name='bt_bot'),
     path('home/', views.index, name='home'),
 ]
