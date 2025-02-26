@@ -1,17 +1,101 @@
-{% extends 'standalone_base.html' %}
-
-{% block title %}🤖 Blackrock Trading{% endblock %}
-
-{% block breadcrumb-1-label %}Home{% endblock %}
-{% block breadcrumb-1-href %}/{% endblock %}
-
-{% block breadcrumb-2-label %}BT bot{% endblock %}
-
+{% extends "base.html" %}
 {% load static %}
+{% block extra_css %}
+<!-- <link rel="stylesheet" href="{% static 'bt-bot-dash.css' %}"> -->
+{% endblock %}
 
-<!--Body Content-->
 {% block content %}
+<div class="container">
+    <header class="header">
+        <h1>Crypto Exchange Dashboard</h1>
+        <div class="last-updated">
+            Last updated: <span id="timestamp">{{ exchange_data.timestamp }}</span>
+            <button id="refresh-data" class="refresh-btn">Refresh</button>
+        </div>
+    </header>
 
+    <div class="card p-2">
+        <h2>Exchange Rates Overview</h2>
+        <div class="rates-container">
+            <div class="rate-item">
+                <div class="rate-label">USD/ZAR</div>
+                <div class="rate-value" id="usd-zar">{{ exchange_data.usd_zar }}</div>
+            </div>
+            <div class="rate-item">
+                <div class="rate-label">BTC/USD (Binance)</div>
+                <div class="rate-value" id="binance-btc-usdt">{{ exchange_data.binance_btc_usdt }}</div>
+            </div>
+            <div class="rate-item">
+                <div class="rate-label">BTC/ZAR (VALR)</div>
+                <div class="rate-value" id="valr-btc-zar">{{ exchange_data.valr_btc_zar }}</div>
+            </div>
+        </div>
+    </div>
 
+    <div class="card highlight-card p-2">
+        <h2>Live Gross Premium (LGP) Analysis</h2>
+        <canvas id="lgpChart"></canvas>
+    </div>
 
+    <div class="card p-2">
+        <h2>Order Book Comparison</h2>
+        <canvas id="orderBookChart"></canvas>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctxLgp = document.getElementById('lgpChart').getContext('2d');
+        const ctxOrderBook = document.getElementById('orderBookChart').getContext('2d');
+
+        function fetchLatestData() {
+            fetch('/standalone-apps/exchange-data-api/')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('timestamp').textContent = data.timestamp;
+                    document.getElementById('usd-zar').textContent = data.usd_zar;
+                    document.getElementById('binance-btc-usdt').textContent = data.binance_btc_usdt;
+                    document.getElementById('valr-btc-zar').textContent = data.valr_btc_zar;
+                    updateLgpChart(data);
+                    updateOrderBookChart(data);
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        function updateLgpChart(data) {
+            new Chart(ctxLgp, {
+                type: 'line',
+                data: {
+                    labels: ['Binance → VALR', 'VALR → Binance'],
+                    datasets: [{
+                        label: 'LGP (%)',
+                        data: [data.binance_to_valr_lgp, data.valr_to_binance_lgp],
+                        borderColor: '#FF5722',
+                        fill: false
+                    }]
+                }
+            });
+        }
+
+        function updateOrderBookChart(data) {
+            new Chart(ctxOrderBook, {
+                type: 'candlestick',
+                data: {
+                    datasets: [{
+                        label: 'Order Book',
+                        data: data.order_book,
+                        borderColor: '#673AB7'
+                    }]
+                }
+            });
+        }
+
+        document.getElementById('refresh-data').addEventListener('click', fetchLatestData);
+        fetchLatestData();
+    });
+</script>
+<script src="{% static 'bt-bot-dash.js' %}"></script>
 {% endblock %}
