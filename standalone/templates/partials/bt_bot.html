@@ -1,45 +1,99 @@
-{% extends "base.html" %}
+{% extends "standalone_base.html" %}
 {% load static %}
-{% block extra_css %}
-<!-- <link rel="stylesheet" href="{% static 'bt-bot-dash.css' %}"> -->
-{% endblock %}
+
+{% block breadcrumb-1-label %}Apps{% endblock %}
+{% block breadcrumb-1-href %}/standalone-apps/home{% endblock %}
+{% block breadcrumb-2-label %}bt-bot{% endblock %}
 
 {% block content %}
 <div class="container">
-    <header class="header">
-        <h1>Crypto Exchange Dashboard</h1>
-        <div class="last-updated">
-            Last updated: <span id="timestamp">{{ exchange_data.timestamp }}</span>
-            <button id="refresh-data" class="refresh-btn">Refresh</button>
+    <header class="header p-2">
+        <h4>Crypto Exchange Dashboard</h4>
+        <button id="refresh-data" class="btn-sm btn btn-success">Refresh</button>
+        <span id="timestamp">{{ exchange_data.timestamp }}</span>
+        <hr>
+        <div class="card text-bg-secondary mb-3">
+            <div class="card-header">MARKET BRIEF</div>
+            <div class="card-body">
+                <p class="card-text">
+                <ul class="list-group list-group-flush rounded">
+                    {% for key, val in exchange_data.lgp_result.items %}
+                    <li class="list-group-item">
+                        {{ key }} : <b>{{ val }}</b>
+                    </li>
+                    {% endfor %}
+                </ul>
+                </p>
+            </div>
         </div>
     </header>
 
-    <div class="card p-2">
-        <h2>Exchange Rates Overview</h2>
-        <div class="rates-container">
-            <div class="rate-item">
-                <div class="rate-label">USD/ZAR</div>
-                <div class="rate-value" id="usd-zar">{{ exchange_data.usd_zar }}</div>
+    <div class="row g-2">
+        <div class="col-md-3 col-12">
+            <div class="card text-bg-secondary mb-3">
+                <div class="card-header">Exchange Rates</div>
+                <div class="card-body">
+                    <p class="card-text">
+                    <ul class="list-group list-group-flush rounded">
+                        <li class="list-group-item">
+                            <div class="rate-value">USD/ZAR:
+                                <b>{{ exchange_data.usd_zar }}</b>
+                            </div>
+                        </li>
+                    </ul>
+                    </p>
+                </div>
             </div>
-            <div class="rate-item">
-                <div class="rate-label">BTC/USD (Binance)</div>
-                <div class="rate-value" id="binance-btc-usdt">{{ exchange_data.binance_btc_usdt }}</div>
-            </div>
-            <div class="rate-item">
-                <div class="rate-label">BTC/ZAR (VALR)</div>
-                <div class="rate-value" id="valr-btc-zar">{{ exchange_data.valr_btc_zar }}</div>
+            <div class="card text-bg-secondary mb-3">
+                <div class="card-header">Tickers</div>
+                <div class="card-body">
+                    <p class="card-text">
+                    <ul class="list-group list-group-flush rounded">
+                        <li class="list-group-item">
+                            <div class="rate-value">BTC Binance ($): <b>{{ exchange_data.binance_btc_usdt }}</b>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="rate-value">BTC Valr ($): <b>{{ exchange_data.valr_btc_usd }}</b>
+                            </div>
+                        </li>
+                    </ul>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="card highlight-card p-2">
-        <h2>Live Gross Premium (LGP) Analysis</h2>
-        <canvas id="lgpChart"></canvas>
-    </div>
-
-    <div class="card p-2">
-        <h2>Order Book Comparison</h2>
-        <canvas id="orderBookChart"></canvas>
+        <div class="col-md-9 col-12">
+            <div class="card highlight-card p-2">
+                <h2>Live Gross Premium (LGP) Analysis</h2>
+                <canvas id="lgpChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="card p-2">
+                <h2>Binance Order Book</h2>
+                <div class="rate-value">Asks (ZAR converted): {{ exchange_data.binance_asks_zar }}</div>
+                <div class="rate-value">Bids (ZAR converted): {{ exchange_data.binance_bids_zar }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="card p-2">
+                <h2>Valr Order Book</h2>
+                <div class="rate-value">Asks (ZAR converted): {{ exchange_data.valr_asks }}</div>
+                <div class="rate-value">Bids (ZAR converted): {{ exchange_data.valr_bids }}</div>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="card p-2">
+                <h2>Asks (Valr) vs Bids (Binance)</h2>
+                <canvas id="asksValrBidsBinanceChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6 col-12">
+            <div class="card p-2">
+                <h2>Bids (Valr) vs Asks (Binance)</h2>
+                <canvas id="bidsValrAsksBinanceChart"></canvas>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -48,25 +102,18 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.6/dist/chart.umd.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const ctxLgp = document.getElementById('lgpChart').getContext('2d');
-        const ctxOrderBook = document.getElementById('orderBookChart').getContext('2d');
-
         function fetchLatestData() {
             fetch('/standalone-apps/exchange-data-api/')
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('timestamp').textContent = data.timestamp;
-                    document.getElementById('usd-zar').textContent = data.usd_zar;
-                    document.getElementById('binance-btc-usdt').textContent = data.binance_btc_usdt;
-                    document.getElementById('valr-btc-zar').textContent = data.valr_btc_zar;
-                    updateLgpChart(data);
-                    updateOrderBookChart(data);
+                    updateCharts(data);
                 })
                 .catch(error => console.error('Error fetching data:', error));
         }
 
-        function updateLgpChart(data) {
-            new Chart(ctxLgp, {
+        function updateCharts(data) {
+            new Chart(document.getElementById('lgpChart').getContext('2d'), {
                 type: 'line',
                 data: {
                     labels: ['Binance → VALR', 'VALR → Binance'],
@@ -78,16 +125,25 @@
                     }]
                 }
             });
-        }
 
-        function updateOrderBookChart(data) {
-            new Chart(ctxOrderBook, {
-                type: 'candlestick',
+            new Chart(document.getElementById('asksValrBidsBinanceChart').getContext('2d'), {
+                type: 'pie',
                 data: {
+                    labels: ['Asks (Valr)', 'Bids (Binance)'],
                     datasets: [{
-                        label: 'Order Book',
-                        data: data.order_book,
-                        borderColor: '#673AB7'
+                        data: [data.valr_asks[0][0], data.binance_bids_zar[0][0]],
+                        backgroundColor: ['#FF5733', '#33FF57']
+                    }]
+                }
+            });
+
+            new Chart(document.getElementById('bidsValrAsksBinanceChart').getContext('2d'), {
+                type: 'pie',
+                data: {
+                    labels: ['Bids (Valr)', 'Asks (Binance)'],
+                    datasets: [{
+                        data: [data.valr_bids[0][0], data.binance_asks_zar[0][0]],
+                        backgroundColor: ['#3366FF', '#FF33A1']
                     }]
                 }
             });
@@ -97,5 +153,4 @@
         fetchLatestData();
     });
 </script>
-<script src="{% static 'bt-bot-dash.js' %}"></script>
 {% endblock %}
